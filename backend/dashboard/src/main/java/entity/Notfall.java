@@ -10,5 +10,10 @@ public class Notfall {
 	Date enddate;
 	int Enweisungsart;
 	int dringlichkeit;
+
 	
+	public Notfall(Patient patient, Diagnose diagnose) {
+		this.patientenID= patient;
+		this.diagnoseID= diagnose;
+	}
 }
