@@ -6,10 +6,10 @@ import java.util.Collection;
 import entity.Diagnose;
 
 public class DiagnosenManager {
-	private Collection<Diagnose> diagnosen;
+	private Collection <Diagnose> diagnosen;
 	
-	public DiagnosenManager() {
+	/*public DiagnosenManager() {
 		this.diagnosen = new ArrayList<Diagnose>;
 	}
-	public boolean leseCSVein
+	public boolean leseCSVein*/
 }
