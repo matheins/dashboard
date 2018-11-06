@@ -37,7 +37,7 @@ public class PatientenManager {
 				//lese jeweils nur eine Zeile ein.
 				String eineZeile = dateiEinlesen.nextLine();
 				//zerlege hier die Zeile mittels des Delimeters ; in zwei Teile.
-				teilstringEinlesen = new Scanner(eineZeile).useDelimiter(",");//TODO: hier noch Speicherproblem loesen.
+				teilstringEinlesen = new Scanner(eineZeile).useDelimiter(",");//TODO: hier noch Speicherproblem loesen.//evtl. Hochkommata in PLZ beruecksichtigen///Bibliothek verwenden
 				
 				//zunaechst in 1. der Spalte mit der ID die Anfuehrungszeichen entfernen, wenn vorhanden
 				String ersteSpalte = teilstringEinlesen.next();
@@ -49,7 +49,7 @@ public class PatientenManager {
 				this.patienten.add(
 					new Patient(
 						ersteSpalte,
-						Integer.parseInt(teilstringEinlesen.next().substring(1, 6)),
+						Integer.parseInt(teilstringEinlesen.next().//replace(oldChar, newChar)//.substring(1, 6)),
 						(int) Double.parseDouble(teilstringEinlesen.next())//TODO: aus meiner Sicht hier Double, entsprechend .csv /Kai
 					)
 				);

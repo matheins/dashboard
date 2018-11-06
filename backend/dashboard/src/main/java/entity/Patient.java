@@ -4,10 +4,11 @@ public class Patient {
 	
 	
 	String patientenID;
-	int alter;
-	int plz;//IMHO: auf String aendern, da im Ausland PLZ auch Buchstaben haben koennen./Kai
+	int alter;//int statt double wie in der CSV ist ok
+	String plz;//IMHO: auf String aendern, da im Ausland PLZ auch Buchstaben haben koennen./Kai
+				//ausserdem: koennen Kommata drin sein
 	
-	public Patient(String patientenID, int plz, int alter){
+	public Patient(String patientenID, String plz, int alter){
 		this.patientenID = patientenID;
 		this.plz = plz;
 		this.alter = alter;
@@ -21,11 +22,11 @@ public class Patient {
 		this.alter = alter;
 	}
 
-	public int getPlz() {
+	public String getPlz() {
 		return plz;
 	}
 
-	public void setPlz(int plz) {
+	public void setPlz(String plz) {
 		this.plz = plz;
 	}
 
