@@ -1,8 +1,10 @@
 package main.java.app;
 
-import main.java.entity.Notfall;
+
 import main.java.entity.Diagnose;
+import main.java.entity.Notfall;
 import main.java.entity.Patient;
+import main.java.usecase.DiagnosenManager;
 import main.java.usecase.PatientenManager;
 
 public class Application {
