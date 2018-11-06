@@ -5,9 +5,9 @@ public class Patient {
 	
 	String patientenID;
 	int alter;
-	int plz;//IMHO: auf String aendern, da im Ausland PLZ auch Buchstaben haben koennen./Kai
+	String plz;//IMHO: auf String aendern, da im Ausland PLZ auch Buchstaben haben koennen./Kai
 	
-	public Patient(String patientenID, int plz, int alter){
+	public Patient(String patientenID, String plz, int alter){
 		this.patientenID = patientenID;
 		this.plz = plz;
 		this.alter = alter;
@@ -21,11 +21,11 @@ public class Patient {
 		this.alter = alter;
 	}
 
-	public int getPlz() {
+	public String getPlz() {
 		return plz;
 	}
 
-	public void setPlz(int plz) {
+	public void setPlz(String plz) {
 		this.plz = plz;
 	}
 
