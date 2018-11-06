@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="col-sm text-center">
+    <h2 class="text-center">Demo Pie-Chart</h2>
+    <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          [options]="pieChartOptions"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+      </div>
+</div>
