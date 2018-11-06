@@ -39,15 +39,15 @@ public class DiagnosenManager {
 				teilstringEinlesen = new Scanner(eineZeile).useDelimiter(";");//TODO: hier noch Speicherproblem loesen.
 				
 				//zunaechst in 1. der Spalte mit der ID die Anfuehrungszeichen entfernen, wenn vorhanden
-				String ersteZeile = teilstringEinlesen.next();
-				if (ersteZeile.startsWith("\"")) {
-					ersteZeile = ersteZeile.substring(1, 33);
+				String ersteSpalte = teilstringEinlesen.next();
+				if (ersteSpalte.startsWith("\"")) {
+					ersteSpalte = ersteSpalte.substring(1, 33);
 				} else {
 					//ersteZeile kann so bleiben
 				}
 				this.diagnosen.add(
 					new Diagnose(
-						ersteZeile,
+						ersteSpalte,
 						teilstringEinlesen.next()
 					)
 				);

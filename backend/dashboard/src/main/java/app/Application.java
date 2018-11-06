@@ -3,6 +3,8 @@ package app;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
+import usecase.DiagnosenManager;
+import usecase.PatientenManager;
 
 public class Application {
 
@@ -31,7 +33,14 @@ public class Application {
 					", \nStartdatum: "+ n1.getStartdate() +", \nEnddatum: "+ n1.getEnddate()
 					+" ,\nEinweisungsart: "+ n1.getEnweisungsart()+ ", Dringlichkeit: "
 					+n1.getDringlichkeit());
-
+			
+/*			DiagnosenManager dm = new DiagnosenManager();
+			dm.lesenCSVein();
+			dm.toString();*/
+			
+			PatientenManager pm = new PatientenManager();
+			pm.lesenCSVein();
+			pm.toString();
 			
 	}
 		
