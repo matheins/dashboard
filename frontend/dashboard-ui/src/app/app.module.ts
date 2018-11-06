@@ -3,20 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PatientComponent } from './general/patient/patient.component';
 import { PatientenComponent } from './views/patienten/patienten.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PatientService } from './services/patient.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatientComponent,
     PatientenComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

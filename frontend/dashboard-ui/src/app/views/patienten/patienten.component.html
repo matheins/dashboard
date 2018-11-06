@@ -3,26 +3,19 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Vorname</th>
-          <th>Nachname</th>
-          <th>Einlieferungsdatum</th>
-          <th>Kritikalität</th>
+          <th>Name</th>
+          <th>Straße</th>
+          <th>PLZ</th>
+          <th>Stadt</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>P1001</td>
-          <td>Peter</td>
-          <td>Schulz</td>
-          <td>30.10.18</td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>P1002</td>
-          <td>Ida</td>
-          <td>Schön</td>
-          <td>30.10.18</td>
-          <td>3</td>
+        <tr *ngFor="let patient of patients">
+          <td>{{patient.id}}</td>
+          <td>{{patient.name}}</td>
+          <td>{{patient.address.street}}</td>
+          <td>{{patient.address.zipcode}}</td>
+          <td>{{patient.address.city}}</td>
         </tr>
       </tbody>
     </table>
