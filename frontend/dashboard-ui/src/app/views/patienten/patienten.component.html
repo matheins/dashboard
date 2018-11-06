@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Straße</th>
+          <th>PLZ</th>
+          <th>Stadt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of patients">
+          <td>{{patient.id}}</td>
+          <td>{{patient.name}}</td>
+          <td>{{patient.address.street}}</td>
+          <td>{{patient.address.zipcode}}</td>
+          <td>{{patient.address.city}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
