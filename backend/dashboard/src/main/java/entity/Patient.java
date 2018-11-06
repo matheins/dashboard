@@ -5,12 +5,12 @@ public class Patient {
 	
 	String patientenID;
 	int alter;
-	int plz;
+	int plz;//IMHO: auf String aendern, da im Ausland PLZ auch Buchstaben haben koennen./Kai
 	
-	public Patient(String patientenID, int alter, int plz) {
-		this.patientenID= patientenID;
-		this.alter= alter;
-		this.plz= plz;
+	public Patient(String patientenID, int plz, int alter){
+		this.patientenID = patientenID;
+		this.plz = plz;
+		this.alter = alter;
 	}
 
 	public int getAlter() {
