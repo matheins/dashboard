@@ -13,9 +13,9 @@ public class Application {
 	public static void main(String[] args) {
 		
 			//patientendummies zum testen
-			Patient p1= new Patient("we21r2tz2",14,49076);
-			Patient p2= new Patient("f1c2ghv32",32,49421);
-			Patient p3= new Patient("fcg322bv3",76,53924);
+			Patient p1= new Patient("we21r2tz2","49076",14);
+			Patient p2= new Patient("f1c2ghv32","49421",32);
+			Patient p3= new Patient("fcg322bv3","53924",76);
 			
 			//diagnosedummies zum testen
 			Diagnose d1= new Diagnose("1","21cd");

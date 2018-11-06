@@ -49,7 +49,7 @@ public class PatientenManager {
 				this.patienten.add(
 					new Patient(
 						ersteSpalte,
-						Integer.parseInt(teilstringEinlesen.next().//replace(oldChar, newChar)//.substring(1, 6)),
+						teilstringEinlesen.next().substring(1, 6),
 						(int) Double.parseDouble(teilstringEinlesen.next())//TODO: aus meiner Sicht hier Double, entsprechend .csv /Kai
 					)
 				);
