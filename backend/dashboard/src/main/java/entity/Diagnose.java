@@ -2,23 +2,23 @@ package main.java.entity;
 
 public class Diagnose {
 
-	String diagnoseID;
+	String patientenID;//hier Datentyp Patient? Evtl. auch nicht, da wir die Verknuepfungen zwischen verschiedenen nicht-primitiven Datentypen gering halten wollen
 	String icdID;
 	
 	
-	public Diagnose(String diagnoseID, String icdID) {
-		this.diagnoseID= diagnoseID;
+	public Diagnose(String patientenID, String icdID) {
+		this.patientenID= patientenID;
 		this.icdID= icdID;
 	}
 
 
-	public String getDiagnoseID() {
-		return diagnoseID;
+	public String getPatientenID() {
+		return patientenID;
 	}
 
 
-	public void setDiagnoseID(String diagnoseID) {
-		this.diagnoseID = diagnoseID;
+	public void setPatientenID(String patientenID) {
+		this.patientenID = patientenID;
 	}
 
 
