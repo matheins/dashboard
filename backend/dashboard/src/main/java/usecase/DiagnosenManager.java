@@ -1,4 +1,4 @@
-package main.java.usecase;
+package usecase;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
-import main.java.entity.Diagnose;
+import entity.Diagnose;
 
 public class DiagnosenManager {
 	private Collection <Diagnose> diagnosen;

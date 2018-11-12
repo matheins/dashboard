@@ -1,4 +1,4 @@
-package main.java.usecase;
+package usecase;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 import com.opencsv.CSVReader;
 
-import main.java.converter.IStringToDate;
-import main.java.converter.impl.StringToDate;
-import main.java.entity.Diagnose;
-import main.java.entity.Notfall;
-import main.java.entity.Patient;
+import converter.IStringToDate;
+import converter.impl.StringToDate;
+import entity.Diagnose;
+import entity.Notfall;
+import entity.Patient;
 
 public class PatientenManager {
 	private Collection <Patient> patienten;

@@ -1,4 +1,4 @@
-package main.java.converter.impl;
+package converter.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
-import main.java.converter.IStringToDate;
+import converter.IStringToDate;
+
 
 public class StringToDate implements IStringToDate {
 	//public static IStringToDate stringToDate;
