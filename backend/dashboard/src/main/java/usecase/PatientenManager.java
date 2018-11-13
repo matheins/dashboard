@@ -16,7 +16,7 @@ import converter.impl.StringToDate;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
-import services.PatientenService;
+//import services.PatientenService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -116,7 +116,7 @@ public class PatientenManager {
 	}
 
 
- public PatientenManager(final PatientenService patientenService) {
+/* public PatientenManager(final PatientenService patientenService) {
     
    get("/patienten", new Route() {
      @Override
@@ -125,10 +125,13 @@ public class PatientenManager {
        return patientenService.getAllPatienten();
      }
    });
-    
+   
+	
    // more routes
  }
-
+*/ 
+	
+	
 public static Collection<Patient> getPatienten() {
 	return  patienten;
 }
@@ -137,7 +140,5 @@ public Collection<Notfall> getNotfaelle() {
 	return notfaelle;
 }
  
- 
- 
- 
+
 }
