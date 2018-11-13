@@ -16,7 +16,7 @@ import converter.impl.StringToDate;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
-import entity.PatientenService;
+import services.PatientenService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -130,7 +130,7 @@ public class PatientenManager {
  }
 
 public static Collection<Patient> getPatienten() {
-	return patienten;
+	return  patienten;
 }
 
 public Collection<Notfall> getNotfaelle() {

@@ -5,7 +5,7 @@ import java.io.IOException;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
-import entity.PatientenService;
+import services.PatientenService;
 import usecase.DiagnosenManager;
 import usecase.PatientenManager;
 import static spark.Spark.*;
