@@ -16,9 +16,14 @@ import converter.impl.StringToDate;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
+import entity.PatientenService;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import static spark.Spark.*;
 
 public class PatientenManager {
-	private Collection <Patient> patienten;
+	private static Collection <Patient> patienten;
 	private Collection<Notfall> notfaelle;
 	
 	public PatientenManager() {
@@ -109,4 +114,30 @@ public class PatientenManager {
 			}*/
 		}
 	}
+
+
+ public PatientenManager(final PatientenService patientenService) {
+    
+   get("/patienten", new Route() {
+     @Override
+     public Object handle(Request request, Response response) {
+       // process request
+       return patientenService.getAllPatienten();
+     }
+   });
+    
+   // more routes
+ }
+
+public static Collection<Patient> getPatienten() {
+	return patienten;
+}
+
+public Collection<Notfall> getNotfaelle() {
+	return notfaelle;
+}
+ 
+ 
+ 
+ 
 }

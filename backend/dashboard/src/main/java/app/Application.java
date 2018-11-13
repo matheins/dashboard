@@ -1,19 +1,24 @@
 package app;
 
-
 import java.io.IOException;
 
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
+import entity.PatientenService;
 import usecase.DiagnosenManager;
 import usecase.PatientenManager;
+import static spark.Spark.*;
 
 public class Application {
-
 	
 	public static void main(String[] args) throws IOException {
 		
+			 new PatientenManager(new PatientenService());
+			  
+			 get("/patienten", (req, res) -> PatientenService.getAllPatienten());
+
+
 			//patientendummies zum testen
 			Patient p1= new Patient("we21r2tz2","49076",14);
 			Patient p2= new Patient("f1c2ghv32","49421",32);
@@ -29,9 +34,7 @@ public class Application {
 			Notfall n2= new Notfall("1234679",p2,d3, 2018, 7, 23, 9, 15, 2018, 7, 23, 12, 30,"Selbst",4);
 			Notfall n3= new Notfall("1234680",p3,d2, 2010, 04, 11, 15, 00, 2010, 04, 13, 14, 00,"Rettungswagen",2);
 */		
-			
-			
-		
+				
 /*			System.out.println("Notfall 1:  "+	n1.getNotfallID() +", Patient: "+ n1.getPatientenID().getPatientenID()+
 					", \nStartdatum: "+ n1.getStartdate() +", \nEnddatum: "+ n1.getEnddate()
 					+" ,\nEinweisungsart: "+ n1.getEnweisungsart()+ ", Dringlichkeit: "
@@ -42,12 +45,10 @@ public class Application {
 			dm.lesenCSVein();
 			dm.toString();*/
 			
-			PatientenManager pm = new PatientenManager();
-			pm.lesenCSVein();
-			pm.toString();
-			
+//			PatientenManager pm = new PatientenManager();
+//			pm.lesenCSVein();
+//			pm.toString();
 			
 	}
-		
 		
 }
