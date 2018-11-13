@@ -20,12 +20,10 @@ import spark.Route;
 import static spark.Spark.*;
 
 public class AufenthaltManager {
-	private static Collection <Aufenthalt> aufenthalte;
-	private Collection<Aufenthalt> notfaelle;
+	private Collection <Aufenthalt> aufenthalte;
 	
 	public AufenthaltManager() {
 		this.aufenthalte = new ArrayList<Aufenthalt>();
-		
 	}
 	
 	public void lesenCSVein() throws IOException{
@@ -34,6 +32,7 @@ public class AufenthaltManager {
 		CSVReader reader = null;
 		boolean weiter = true;
 		String [] nextLine;
+		Aufenthalt aAufenthalt;
 		
 		try{
 			patientenFile = new FileReader("patients.csv");
@@ -46,28 +45,19 @@ public class AufenthaltManager {
 		if(weiter){
 			reader.readNext();//ueberspringe die Kopfzeile der CSV
 			while ((nextLine = reader.readNext()) != null) {
-				if(this.findAufenthaltByID(nextLine[0]) == null){//gucke, ob Patientenobjekt bereits existiert.
-//					Patient aPatient;
-					this.aufenthalte.add(
-						new Aufenthalt(
-							nextLine[0],
-							nextLine[1],
-							//(int) nf.parse(nextLine[2]).doubleValue()
-							(int) Double.parseDouble(nextLine[2].replace(',','.'))
-						)
-					);
-				}
-				this.notfaelle.add(
-					new Aufenthalt(
-						this.findAufenthaltByID(nextLine[0]),
-						Integer.parseInt(nextLine[3]),//Dringlichkeit der Einweisung
+				this.aufenthalte.add(
+					aAufenthalt = new Aufenthalt(
+						nextLine[0],//ID
+						Integer.parseInt(nextLine[3]),//Dringlichkeit
 						strtoD.convertDate(nextLine[4]),//Beginn der Behandlung
 						strtoD.convertDate(nextLine[5]),//Ende der Behandlung
-						nextLine[6]
+						nextLine[6],//Einweisungsart
+						nextLine[1],//PLZ
+						(int) Double.parseDouble(nextLine[2].replace(',','.'))//Alter
 					)
 				);
+				System.out.println(aAufenthalt.toString());
 			}
-			
 			try{
 				patientenFile.close();
 			} catch(IOException e){
@@ -79,22 +69,20 @@ public class AufenthaltManager {
 	public Aufenthalt findAufenthaltByID(String ID) {
 		Iterator<Aufenthalt> it = aufenthalte.iterator();
 		while (it.hasNext()) {
-			Aufenthalt aufenthalte = it.next();
-			if (aufenthalte.getAufenthaltID().equals(ID)){
-				return aufenthalte;
+			Aufenthalt aufenthalt = it.next();
+			if (aufenthalt.getAufenthaltID().equals(ID)){
+				return aufenthalt;
 			}
 		}
 		return null;
 	}
-
 	
-		public static Collection<Aufenthalt> getAufenthaltID() {
+	public Collection<Aufenthalt> getAufenthaltID() {
 			return  aufenthalte;
 	}
 
-
-public static Collection<Aufenthalt> getAufenthalte() {
-	return aufenthalte;
-}
+	public Collection<Aufenthalt> getAufenthalte() {
+		return aufenthalte;
+	}
  
 }

@@ -38,14 +38,11 @@ public class Application {
 
 			
 
-/*			DiagnosenManager dm = new DiagnosenManager();
+			DiagnosenManager dm = new DiagnosenManager();
 			dm.lesenCSVein();
-			dm.toString();*/
 			
 			AufenthaltManager am = new AufenthaltManager();
 			am.lesenCSVein();
-			am.toString();
 			
 	}
-		
 }

@@ -89,5 +89,12 @@ public class Aufenthalt {
 	public void setDringlichkeit(int dringlichkeit) {
 		this.dringlichkeit = dringlichkeit;
 	}
+	
+	public String toString(){
+		return "Aufenthalts-ID: " + this.aufenthaltID + ", Dringlichkeit: " + this.dringlichkeit
+				+ ", Startdatum: " + this.getStartdate().toString() + ", Enddatum: "
+				+ this.getEnddate().toString() + ", Einweisungsart: " + this.getEnweisungsart()
+				+ ", PLZ: " + this.getPlz() + ", Alter: " + this.getAlter();
+	}
 
 }

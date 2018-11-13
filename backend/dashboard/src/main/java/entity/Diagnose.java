@@ -31,5 +31,7 @@ public class Diagnose {
 		this.icdID = icdID;
 	}
 	
-	
+	public String toString(){
+		return "Aufenthalts-ID :" + this.patientenID + ", ICD-ID: " + this.icdID;
+	}
 }
