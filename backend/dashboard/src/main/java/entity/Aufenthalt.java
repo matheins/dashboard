@@ -2,8 +2,8 @@ package entity;
 
 import java.util.Date;
 
-public class Notfall {
-	Patient patientenID;//hier Zahlenwert oder Patientenobjekt?
+public class Aufenthalt {
+	String aufenthaltID;//hier Zahlenwert oder Patientenobjekt?
 	Date startdate;
 	//@SuppressWarnings("deprecation")
 	//Date startdate= new Date(2012-1900, 05, 19, 20, 15);
@@ -11,25 +11,52 @@ public class Notfall {
 	Date enddate;
 	String Enweisungsart;
 	int dringlichkeit;
+	String plz;
+	int alter;
 
 	
 	@SuppressWarnings("deprecation")
-	public Notfall(Patient patient, int Dringlichkeit, Date startdate, Date enddate, String Einweisungsart
-		) {
-			this.patientenID= patient;
+	public Aufenthalt(String aufenthaltID, int Dringlichkeit, Date startdate, Date enddate, 
+			String Einweisungsart, String plz, int alter) {
+			this.aufenthaltID= aufenthaltID;
 			this.dringlichkeit= Dringlichkeit;
 			this.startdate= startdate;
 			this.enddate= enddate;
 			this.Enweisungsart= Einweisungsart;
+			this.plz = plz;
+			this.alter = alter;
 	}
 
-	public Patient getPatientenID() {
-		return patientenID;
+	
+	public String getAufenthaltID() {
+		return aufenthaltID;
 	}
 
-	public void setPatientenID(Patient patientenID) {
-		this.patientenID = patientenID;
+
+	public void setAufenthaltID(String aufenthaltID) {
+		this.aufenthaltID = aufenthaltID;
 	}
+
+
+	public String getPlz() {
+		return plz;
+	}
+
+
+	public void setPlz(String plz) {
+		this.plz = plz;
+	}
+
+
+	public int getAlter() {
+		return alter;
+	}
+
+
+	public void setAlter(int alter) {
+		this.alter = alter;
+	}
+
 
 	public Date getStartdate() {
 		return startdate;

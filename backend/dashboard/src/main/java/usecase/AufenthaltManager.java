@@ -12,21 +12,20 @@ import com.opencsv.CSVReader;
 import converter.IStringToDate;
 import converter.impl.StringToDate;
 import entity.Diagnose;
-import entity.Notfall;
-import entity.Patient;
+import entity.Aufenthalt;
 //import services.PatientenService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import static spark.Spark.*;
 
-public class PatientenManager {
-	private static Collection <Patient> patienten;
-	private Collection<Notfall> notfaelle;
+public class AufenthaltManager {
+	private static Collection <Aufenthalt> aufenthalte;
+	private Collection<Aufenthalt> notfaelle;
 	
-	public PatientenManager() {
-		this.patienten = new ArrayList<Patient>();
-		this.notfaelle = new ArrayList<Notfall>();
+	public AufenthaltManager() {
+		this.aufenthalte = new ArrayList<Aufenthalt>();
+		
 	}
 	
 	public void lesenCSVein() throws IOException{
@@ -47,10 +46,10 @@ public class PatientenManager {
 		if(weiter){
 			reader.readNext();//ueberspringe die Kopfzeile der CSV
 			while ((nextLine = reader.readNext()) != null) {
-				if(this.findPatientByID(nextLine[0]) == null){//gucke, ob Patientenobjekt bereits existiert.
+				if(this.findAufenthaltByID(nextLine[0]) == null){//gucke, ob Patientenobjekt bereits existiert.
 //					Patient aPatient;
-					this.patienten.add(
-						new Patient(
+					this.aufenthalte.add(
+						new Aufenthalt(
 							nextLine[0],
 							nextLine[1],
 							//(int) nf.parse(nextLine[2]).doubleValue()
@@ -59,8 +58,8 @@ public class PatientenManager {
 					);
 				}
 				this.notfaelle.add(
-					new Notfall(
-						this.findPatientByID(nextLine[0]),
+					new Aufenthalt(
+						this.findAufenthaltByID(nextLine[0]),
 						Integer.parseInt(nextLine[3]),//Dringlichkeit der Einweisung
 						strtoD.convertDate(nextLine[4]),//Beginn der Behandlung
 						strtoD.convertDate(nextLine[5]),//Ende der Behandlung
@@ -77,26 +76,25 @@ public class PatientenManager {
 		}
 	}
 
-	public Patient findPatientByID(String ID) {
-		Iterator<Patient> it = patienten.iterator();
+	public Aufenthalt findAufenthaltByID(String ID) {
+		Iterator<Aufenthalt> it = aufenthalte.iterator();
 		while (it.hasNext()) {
-			Patient patient = it.next();
-			if (patient.getPatientenID().equals(ID)){
-				return patient;
+			Aufenthalt aufenthalte = it.next();
+			if (aufenthalte.getAufenthaltID().equals(ID)){
+				return aufenthalte;
 			}
 		}
 		return null;
 	}
 
 	
-		public static Collection<Patient> getPatienten() {
-			return  patienten;
+		public static Collection<Aufenthalt> getAufenthaltID() {
+			return  aufenthalte;
 	}
 
 
-public Collection<Notfall> getNotfaelle() {
-	return notfaelle;
+public static Collection<Aufenthalt> getAufenthalte() {
+	return aufenthalte;
 }
  
-
 }
