@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+import com.opencsv.CSVReader;
+
 import entity.Diagnose;
 
 public class DiagnosenManager {
@@ -18,9 +20,9 @@ public class DiagnosenManager {
 	
 	public void lesenCSVein(){
 		FileReader diagnosenFile = null;
-		Scanner dateiEinlesen = null;
-		Scanner teilstringEinlesen = null;
+		CSVReader reader = null;
 		boolean weiter = true;
+		String [] nextLine;
 		try{
 			diagnosenFile = new FileReader(("diagnoses.csv"));
 			dateiEinlesen = new Scanner(diagnosenFile);//.useDelimiter(";");
