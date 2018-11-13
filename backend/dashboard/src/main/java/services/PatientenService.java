@@ -1,9 +1,10 @@
-package entity;
+package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import entity.Patient;
 import usecase.PatientenManager;
 
 public class PatientenService {

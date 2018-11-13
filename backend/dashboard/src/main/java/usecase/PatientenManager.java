@@ -14,7 +14,7 @@ import converter.impl.StringToDate;
 import entity.Diagnose;
 import entity.Notfall;
 import entity.Patient;
-import entity.PatientenService;
+import services.PatientenService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -101,9 +101,15 @@ public class PatientenManager {
 		// more routes
 	}
 
+<<<<<<< HEAD
 	public static Collection<Patient> getPatienten() {
 		return patienten;
 	}
+=======
+public static Collection<Patient> getPatienten() {
+	return  patienten;
+}
+>>>>>>> branch 'master' of https://github.com/matheins/dashboard.git
 
 	public Collection<Notfall> getNotfaelle() {
 		return notfaelle;
