@@ -59,6 +59,7 @@ public class AufenthaltManager {
 				System.out.println(aAufenthalt.toString());
 			}
 			try{
+				System.out.println("Import der CSV-Daten abgeschlossen!");
 				patientenFile.close();
 			} catch(IOException e){
 				System.err.println("Datei nicht gefunden!");
