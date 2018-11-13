@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+import com.opencsv.CSVReader;
+
 import entity.Diagnose;
 
 public class DiagnosenManager {
@@ -16,43 +18,32 @@ public class DiagnosenManager {
 		this.diagnosen = new ArrayList<Diagnose>();
 	}
 	
-	public void lesenCSVein(){
+	public void lesenCSVein() throws IOException{
 		FileReader diagnosenFile = null;
-		Scanner dateiEinlesen = null;
-		Scanner teilstringEinlesen = null;
+		CSVReader reader = null;
 		boolean weiter = true;
+		String [] nextLine;
 		try{
 			diagnosenFile = new FileReader(("diagnoses.csv"));
-			dateiEinlesen = new Scanner(diagnosenFile);//.useDelimiter(";");
+			reader= new CSVReader(diagnosenFile);
 		} catch (FileNotFoundException e){
 			System.err.println("Datei nicht gefunden!");
 			weiter = false;
 		}
 		this.diagnosen.clear();
-		dateiEinlesen.nextLine();//Kopfzeile der .csv mit Angabe, was in der ersten
-									//und zweiten Spalte steht, ueberspringen 
-		while(weiter){
-			while(dateiEinlesen.hasNextLine()){
-				//lese jeweils nur eine Zeile ein.
-				String eineZeile = dateiEinlesen.nextLine();
-				//zerlege hier die Zeile mittels des Delimeters ; in zwei Teile.
-				teilstringEinlesen = new Scanner(eineZeile).useDelimiter(";");//TODO: hier noch Speicherproblem loesen.
-				
-				//zunaechst in 1. der Spalte mit der ID die Anfuehrungszeichen entfernen, wenn vorhanden
-				String ersteSpalte = teilstringEinlesen.next();
-				if (ersteSpalte.startsWith("\"")) {
-					ersteSpalte = ersteSpalte.substring(1, 33);
-				} else {
-					//ersteZeile kann so bleiben
-				}
+		
+		if(weiter){
+			reader.readNext(); //uebersoringe die Kpfzeile der CSV
+			while((nextLine= reader.readNext()) !=null){
 				this.diagnosen.add(
-					new Diagnose(
-						ersteSpalte,
-						teilstringEinlesen.next()
-					)
+				new Diagnose(
+						nextLine[0],
+						nextLine[1]
+						)
 				);
+				
+				
 			} try{
-				teilstringEinlesen.close();
 				diagnosenFile.close();
 			} catch(IOException e){
 				System.err.println("Datei nicht gefunden!");
