@@ -52,7 +52,7 @@ public class DiagnosenManager {
 				System.out.println(aDiagnose.toString());
 			}
 			try{
-				System.out.println("Import der CSV-Daten abgeschlossen!");
+				System.out.println("Import der Diagnosedaten aus diagnoses.csv abgeschlossen!");
 				diagnosenFile.close();
 			} catch(IOException e){
 				System.err.println("Datei nicht gefunden!");

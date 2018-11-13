@@ -2,23 +2,25 @@ package entity;
 
 public class Diagnose {
 
-	String patientenID;//hier Datentyp Patient? Evtl. auch nicht, da wir die Verknuepfungen zwischen verschiedenen nicht-primitiven Datentypen gering halten wollen
+	//Beschriftungen der Variablen & Methoden von "Aufenthalt" zu "Diagnose"
+	
+	String diagnoseID;
 	String icdID;
 	
 	
-	public Diagnose(String patientenID, String icdID) {
-		this.patientenID= patientenID;
+	public Diagnose(String diagnoseID, String icdID) {
+		this.diagnoseID= diagnoseID;
 		this.icdID= icdID;
 	}
 
 
-	public String getPatientenID() {
-		return patientenID;
+	public String getDiagnoseID() {
+		return diagnoseID;
 	}
 
 
-	public void setPatientenID(String patientenID) {
-		this.patientenID = patientenID;
+	public void setDiagnoseID(String diagnoseID) {
+		this.diagnoseID = diagnoseID;
 	}
 
 
@@ -32,6 +34,6 @@ public class Diagnose {
 	}
 	
 	public String toString(){
-		return "Aufenthalts-ID :" + this.patientenID + ", ICD-ID: " + this.icdID;
+		return "Diagnose-ID :" + this.diagnoseID + ", ICD-ID: " + this.icdID;
 	}
 }
