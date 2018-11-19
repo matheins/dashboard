@@ -1,0 +1,58 @@
+
+<div class="table-responsive">
+    <nav aria-label="...">
+        <ul class="pagination">
+          <li [ngClass]="previousPage == 0 ? 'disabled': 'enabled'" class="page-item">
+            <a class="page-link" (click)="prevPage()" tabindex="-1">Zurück</a>
+          </li>
+          <li [ngClass]="previousPage == 0 ? 'disabled': 'enabled'" class="page-item"><a class="page-link" (click)="prevPage()">{{previousPage}}</a></li>
+          <li class="page-item active">
+            <a class="page-link">{{page}} <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="page-item"><a class="page-link" (click)="nextPage()">{{nxtPage}}</a></li>
+          <li class="page-item">
+            <a class="page-link" (click)="nextPage()">Weiter</a>
+          </li>
+        </ul>
+      </nav>
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Von</th>
+        <th>Bis</th>
+        <th>Dringlichkeit</th>
+        <th>Einweisung</th>
+        <th>Alter</th>
+        <th>PLZ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aufenthalt of aufenthalte">
+        <td>{{aufenthalt.aufenthaltID}}</td>
+        <td>{{aufenthalt.startdate}}</td>
+        <td>{{aufenthalt.enddate}}</td>
+        <td>{{aufenthalt.dringlichkeit}}</td>
+        <td>{{aufenthalt.einweisungsart}}</td>
+        <td>{{aufenthalt.alter}}</td>
+        <td>{{aufenthalt.plz}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" (click)="prevPage()" tabindex="-1">Zurück</a>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="prevPage()">{{previousPage}}</a></li>
+        <li class="page-item active">
+          <a class="page-link">{{page}} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="nextPage()">{{nxtPage}}</a></li>
+        <li class="page-item">
+          <a class="page-link" (click)="nextPage()">Weiter</a>
+        </li>
+      </ul>
+    </nav>
+
+</div>

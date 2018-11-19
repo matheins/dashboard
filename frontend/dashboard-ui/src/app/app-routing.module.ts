@@ -5,11 +5,16 @@ import { PatientenComponent } from './views/patienten/patienten.component';
 import { PieChartComponent } from './views/pie-chart/pie-chart.component';
 import { BarChartComponent } from './views/bar-chart/bar-chart.component';
 import { LineChartComponent } from './views/line-chart/line-chart.component';
+import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
 
 const routes: Routes = [
   {
     path: 'patienten',
     component: PatientenComponent,
+  },
+  {
+    path: 'aufenthalte',
+    component: AufenthalteComponent,
   },
   {
     path: 'pie-chart',
