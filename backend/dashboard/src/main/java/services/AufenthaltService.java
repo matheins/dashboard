@@ -1,9 +1,9 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import entity.Aufenthalt;
-import usecase.AufenthaltManager;
 
 public interface AufenthaltService {
 
@@ -12,6 +12,9 @@ public interface AufenthaltService {
 	public Collection<Aufenthalt> getAufenthalte();
 	
 	public Aufenthalt getAufenthalt(String id);
+	
+	public List<Aufenthalt> getAufenthaltePaginiert(int start, int size);
+
 	
 	public boolean aufenthaltExists(String id);
 	 

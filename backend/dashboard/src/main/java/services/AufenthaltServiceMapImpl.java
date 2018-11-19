@@ -1,7 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import entity.Aufenthalt;
 
@@ -23,6 +25,12 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 	
 	public Aufenthalt getAufenthalt(String id){
 		return aufenthaltMap.get(id);
+	}
+	
+	public List<Aufenthalt> getAufenthaltePaginiert(int start, int size){
+		ArrayList<Aufenthalt> list = new ArrayList<Aufenthalt>(aufenthaltMap.values());
+		if(start + size > list.size()) return new ArrayList<Aufenthalt>();
+		return list.subList(start, start + size);
 	}
 	
 	public boolean aufenthaltExists(String id){
