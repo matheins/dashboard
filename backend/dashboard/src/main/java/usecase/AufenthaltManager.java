@@ -18,10 +18,12 @@ public class AufenthaltManager {
 	
 	
 	//private Collection <Aufenthalt> aufenthalte;
-	private AufenthaltService as = new AufenthaltServiceMapImpl();
+	//private AufenthaltService as = new AufenthaltServiceMapImpl();
+	private AufenthaltService as;
 	
-	public AufenthaltManager() {
+	public AufenthaltManager(AufenthaltService as) {
 		//this.aufenthalte = new ArrayList<Aufenthalt>();
+		this.as = as ;
 	}
 	
 	public void lesenCSVein() throws IOException{

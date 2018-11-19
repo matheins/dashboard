@@ -21,15 +21,16 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 			
 			DiagnosenManager dm = new DiagnosenManager();
-			AufenthaltManager am = new AufenthaltManager();
 			AufenthaltService as = new AufenthaltServiceMapImpl();
+			AufenthaltManager am = new AufenthaltManager(as);
+			
 			
 			//CSV Dateien einlesen
 			dm.lesenCSVein();
 			am.lesenCSVein();
 			
-			//Array der Aufenthalte ausgeben
-			System.out.println("Aufenthalte Array:"+ as.getAufenthalte().toString());
+			//Array der Aufenthalte ausgeben (Achtung - Braucht sehr lange!)
+			//System.out.println("Aufenthalte Array:"+ as.getAufenthalte().toString());
 	
 			 
 			
