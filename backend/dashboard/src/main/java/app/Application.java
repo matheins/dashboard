@@ -2,6 +2,7 @@ package app;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 
@@ -70,6 +71,7 @@ public class Application {
 //					+n1.getDringlichkeit()+" alter: "+ n1.getAlter());
 //
 //			
-			
+			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
+			System.out.println(mapGefiltert.size());
 	}
 }
