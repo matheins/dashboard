@@ -9,7 +9,7 @@ public class Aufenthalt {
 	//Date startdate= new Date(2012-1900, 05, 19, 20, 15);
 							//year,  month,  date,  hrs,  min
 	Date enddate;
-	String Enweisungsart;
+	String einweisungsart;
 	int dringlichkeit;
 	String plz;
 	int alter;
