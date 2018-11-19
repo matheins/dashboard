@@ -12,6 +12,8 @@ import { BarChartComponent } from './views/bar-chart/bar-chart.component';
 import { LineChartComponent } from './views/line-chart/line-chart.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerRangeComponent } from './tools/datepicker-range/datepicker-range.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { DatepickerRangeComponent } from './tools/datepicker-range/datepicker-ra
     BarChartComponent,
     LineChartComponent,
     DatepickerRangeComponent,
+    AufenthalteComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule,
   ],
   providers: [PatientService],
   bootstrap: [AppComponent]
