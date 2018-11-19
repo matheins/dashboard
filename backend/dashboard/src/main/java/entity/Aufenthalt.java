@@ -9,7 +9,7 @@ public class Aufenthalt {
 	//Date startdate= new Date(2012-1900, 05, 19, 20, 15);
 							//year,  month,  date,  hrs,  min
 	Date enddate;
-	String Enweisungsart;
+	String einweisungsart;
 	int dringlichkeit;
 	String plz;
 	int alter;
@@ -22,7 +22,7 @@ public class Aufenthalt {
 			this.dringlichkeit= Dringlichkeit;
 			this.startdate= startdate;
 			this.enddate= enddate;
-			this.Enweisungsart= Einweisungsart;
+			this.einweisungsart= Einweisungsart;
 			this.plz = plz;
 			this.alter = alter;
 	}
@@ -74,12 +74,12 @@ public class Aufenthalt {
 		this.enddate = enddate;
 	}
 
-	public String getEnweisungsart() {
-		return Enweisungsart;
+	public String getEinweisungsart() {
+		return einweisungsart;
 	}
 
-	public void setEnweisungsart(String enweisungsart) {
-		Enweisungsart = enweisungsart;
+	public void setEinweisungsart(String enweisungsart) {
+		einweisungsart = enweisungsart;
 	}
 
 	public int getDringlichkeit() {
@@ -93,7 +93,7 @@ public class Aufenthalt {
 	public String toString(){
 		return "Aufenthalts-ID: " + this.aufenthaltID + ", Dringlichkeit: " + this.dringlichkeit
 				+ ", Startdatum: " + this.getStartdate().toString() + ", Enddatum: "
-				+ this.getEnddate().toString() + ", Einweisungsart: " + this.getEnweisungsart()
+				+ this.getEnddate().toString() + ", Einweisungsart: " + this.getEinweisungsart()
 				+ ", PLZ: " + this.getPlz() + ", Alter: " + this.getAlter();
 	}
 

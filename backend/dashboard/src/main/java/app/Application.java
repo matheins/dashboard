@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import entity.Diagnose;
 import services.AufenthaltService;
 import services.AufenthaltServiceMapImpl;
+import services.responses.CorsFilter;
 import services.responses.StandardResponse;
 import services.responses.StatusResponse;
 import entity.Aufenthalt;
@@ -33,14 +34,15 @@ public class Application {
 			//System.out.println("Aufenthalte Array:"+ as.getAufenthalte().toString());
 	
 			 
+			 CorsFilter.apply(); //APPLY THIS BEFORE MAPPING THE ROUTES
 			
 		     get("/hello", (req, res) -> "Hello World");
+		    
 		     
 		     get("/aufenthalte", (request, response) -> {
 				 response.type("application/json");
 				    return new Gson().toJson(
-				      new StandardResponse(StatusResponse.SUCCESS,new Gson()
-				        .toJsonTree(as.getAufenthalte())));
+				      as.getAufenthalte());
 		     });
 		     
 //		     get("/diagnosen", (request, response) -> {
