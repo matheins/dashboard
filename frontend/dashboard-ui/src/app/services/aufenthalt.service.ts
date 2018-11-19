@@ -17,4 +17,7 @@ export class AufenthaltService {
   getAllAufenthalte(): Observable<IAufenthalt[]> {
     return this.http.get<IAufenthalt[]>(this.ROOT_URL + '/aufenthalte');
   }
+  getAufenthaltePaginiert(start, size): Observable<IAufenthalt[]> {
+    return this.http.get<IAufenthalt[]>(this.ROOT_URL + '/aufenthalte?'+'start='+start+'&'+'size='+size);
+  }
 }

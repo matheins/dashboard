@@ -9,19 +9,55 @@ import { AufenthaltService } from 'src/app/services/aufenthalt.service';
 })
 export class AufenthalteComponent implements OnInit {
   title = 'Aufenthalte';
+  start: number;
+  itemsPerPage: number;
+  totalItems: any;
+  page: any;
+  previousPage: any;
+  nxtPage: any;
   public aufenthalte: IAufenthalt[];
 
   constructor(private aufenthaltService: AufenthaltService) {
+    this.page = 1;
+    this.previousPage = 0;
+    this.nxtPage = this.page + 1;
+    this.start = 1;
+    this.itemsPerPage = 20;
+
+  }
+
+  nextPage(){
+    this.page++;
+    this.nxtPage++;
+    this.previousPage++
+    this.start = this.start + this.itemsPerPage;
+    this.loadData();
+  }
+
+  prevPage(){
+    this.page--;
+    this.nxtPage--;
+    this.previousPage--;
+    this.start = this.start - this.itemsPerPage;
+    this.loadData();
+
   }
 
 
 
-
   ngOnInit() {
-    this.aufenthaltService.getAllAufenthalte()
-        .subscribe(data => this.aufenthalte = data);
+    // this.aufenthaltService.getAllAufenthalte()
+    //     .subscribe(data => this.aufenthalte = data);
+
+    this.loadData();
 
 
+
+  }
+
+  loadData(){
+    this.aufenthaltService.getAufenthaltePaginiert(this.start, this.itemsPerPage)
+    .subscribe(data => this.aufenthalte = data);
   }
 
 }
