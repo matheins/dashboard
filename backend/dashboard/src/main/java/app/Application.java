@@ -85,7 +85,7 @@ public class Application {
 //					+n1.getDringlichkeit()+" alter: "+ n1.getAlter());
 //
 //			
-			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
+//			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
 			System.out.println(mapGefiltert.size());
 	}
 }
