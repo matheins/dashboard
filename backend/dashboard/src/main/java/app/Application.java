@@ -52,11 +52,10 @@ public class Application {
 				 
 		     });
 		     
-//		     get("/aufenthalte", (request, response) -> {
-//				 response.type("application/json");
-//				    return new Gson().toJson(
-//				      as.getAufenthalte());
-//		     });
+		     get("/aufenthalte/dringlichkeit", (request, response) -> {
+				 response.type("application/json");
+				    return as.countDringlichkeit();
+		     });
 		     
 //		     get("/diagnosen", (request, response) -> {
 //				 response.type("application/json");
@@ -86,6 +85,6 @@ public class Application {
 //
 //			
 //			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
-			System.out.println(as.countDringlichkeit());
+			//System.out.println(as.countDringlichkeit());
 	}
 }

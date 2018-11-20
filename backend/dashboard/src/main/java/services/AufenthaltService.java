@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import entity.Aufenthalt;
 
 public interface AufenthaltService {
@@ -19,6 +21,6 @@ public interface AufenthaltService {
 	
 	public boolean aufenthaltExists(String id);
 	
-	public HashMap<Integer,Integer> countDringlichkeit();
+	public String countDringlichkeit();
 	
 }
