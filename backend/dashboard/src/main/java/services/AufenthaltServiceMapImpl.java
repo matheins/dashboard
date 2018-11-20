@@ -50,7 +50,8 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 	public HashMap<Integer,Integer> countDringlichkeit(){
 		HashMap<Integer, Integer> map = new HashMap<>();
 		
-			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
+			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
+				
 				map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
 			}
 		return map;

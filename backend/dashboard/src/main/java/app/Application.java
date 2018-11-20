@@ -86,6 +86,6 @@ public class Application {
 //
 //			
 //			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
-			System.out.println(as.countDringlichkeit().get(1));
+			System.out.println(as.countDringlichkeit());
 	}
 }
