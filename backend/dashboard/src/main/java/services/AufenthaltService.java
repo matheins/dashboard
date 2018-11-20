@@ -19,4 +19,6 @@ public interface AufenthaltService {
 	
 	public boolean aufenthaltExists(String id);
 	
+	public HashMap<Integer,Integer> countDringlichkeit();
+	
 }

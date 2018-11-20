@@ -37,10 +37,29 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 		return aufenthaltMap.containsKey(id);
 	}
 	
+	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit){
+		HashMap<String, Aufenthalt> map = new HashMap<>();
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getDringlichkeit()==dringlichkeit){
+				map.put(String, Aufenthalt);
+			}
+		});
+		return map;
+	}
+	
+	public HashMap<Integer,Integer> countDringlichkeit(){
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
+				map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
+			}
+		return map;
+	}
+	
 	//die naechsten drei Methoden funktionieren alle nicht, da innerhalb der foreach-Schleife wohl eine neue
 	//"interne" Klasse erzeugt wird und die lokale Variable count/countDringlichkeit nicht zugreifbar ist.
 	//Hilfe von Herrn Rauch erbeten.
-	public HashMap<Integer,Integer> countDringlichkeit(){
+/*	public HashMap<Integer,Integer> countDringlichkeitDirekt(){
 		HashMap<Integer, Integer> map = new HashMap<>();
 		
 			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
@@ -84,5 +103,6 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 			}
 		return list;
 	}
+	*/
 
 }
