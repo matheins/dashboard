@@ -3,7 +3,7 @@ import static spark.Spark.*;
 
 import com.google.gson.Gson;
 
-import services.AufenthaltService;
+import services.IAufenthaltService;
 import services.responses.StandardResponse;
 import services.responses.StatusResponse;
 

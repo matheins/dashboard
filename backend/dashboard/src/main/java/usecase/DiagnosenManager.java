@@ -14,9 +14,22 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 import entity.Diagnose;
+import services.IAufenthaltService;
+import services.IDiagnoseService;
 
 public class DiagnosenManager {
 	private Collection <Diagnose> diagnosen;
+	
+	
+	
+	
+	
+	private IDiagnoseService ds;
+	
+	public DiagnosenManager(IDiagnoseService ds) {
+		
+		this.ds = ds ;
+	}
 	
 	public DiagnosenManager() {
 		this.diagnosen = new ArrayList<Diagnose>();
@@ -38,12 +51,12 @@ public class DiagnosenManager {
 			System.err.println("Datei nicht gefunden!");
 			weiter = false;
 		}
-		this.diagnosen.clear();
+//		this.diagnosen.clear();
 		
 		if(weiter){
 			reader.readNext();//ueberspringe die Kopfzeile der CSV
 			while((nextLine = reader.readNext()) !=null){
-				this.diagnosen.add(
+				ds.addDiagnose(
 					aDiagnose = new Diagnose(
 						nextLine[0],
 						nextLine[1]

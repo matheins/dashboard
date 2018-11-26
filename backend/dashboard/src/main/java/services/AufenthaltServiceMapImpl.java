@@ -7,7 +7,7 @@ import java.util.List;
 
 import entity.Aufenthalt;
 
-public class AufenthaltServiceMapImpl implements AufenthaltService{
+public class AufenthaltServiceMapImpl implements IAufenthaltService{
 	private HashMap<String, Aufenthalt> aufenthaltMap;
 	private int countDringlichkeit = 0;
 	
