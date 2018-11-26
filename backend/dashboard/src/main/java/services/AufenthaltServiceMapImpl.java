@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import entity.Aufenthalt;
 
 public class AufenthaltServiceMapImpl implements IAufenthaltService{
@@ -47,14 +50,17 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return map;
 	}
 	
-	public HashMap<Integer,Integer> countDringlichkeit(){
-		HashMap<Integer, Integer> map = new HashMap<>();
+	public String countDringlichkeit(){
+		//HashMap<Integer, Integer> map = new HashMap<>();
+		JSONArray json = new JSONArray();
 		
 			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
-				
-				map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
+				json.put(new JSONObject()
+						.put("id", dringlichkeit)
+						.put("value", this.gefiltertNachDringlichkeit(dringlichkeit).size()));				
+				//map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
 			}
-		return map;
+		return json.toString();
 	}
 	
 	//die naechsten drei Methoden funktionieren alle nicht, da innerhalb der foreach-Schleife wohl eine neue
