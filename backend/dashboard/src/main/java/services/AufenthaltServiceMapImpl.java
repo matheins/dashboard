@@ -132,7 +132,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 	
-	public int countNachZeit(Date vonDatum, Date bisDatum){
+	public int countAufenthaltNachZeit(Date vonDatum, Date bisDatum){
 		//JSONArray json = new JSONArray();
 		counter = 0;
 		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
