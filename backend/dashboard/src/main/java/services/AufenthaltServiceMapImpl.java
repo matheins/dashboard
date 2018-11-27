@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 
 import entity.Aufenthalt;
 
-public class AufenthaltServiceMapImpl implements AufenthaltService{
+public class AufenthaltServiceMapImpl implements IAufenthaltService{
 	private int currentValue;//der aktuelle Wert, was gezaehlt wird: Dringlichkeit = 1, = 2, etc.
 	private int minValue;//bei Alter: minimaler Wert
 	private int maxValue;//bei Alter: maximaler Wert
@@ -59,9 +60,19 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 		return map;
 	}
 	
-	//die naechsten drei Methoden funktionieren alle nicht, da innerhalb der foreach-Schleife wohl eine neue
-	//"interne" Klasse erzeugt wird und die lokale Variable count/countDringlichkeit nicht zugreifbar ist.
-	//Hilfe von Herrn Rauch erbeten.
+	public String countDringlichkeitF(){//implementiert ueber Filtermethode oben drueber; belassen wegen vorher benutzt
+		//HashMap<Integer, Integer> map = new HashMap<>();
+		JSONArray json = new JSONArray();
+		
+			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
+				json.put(new JSONObject()
+						.put("id", dringlichkeit)
+						.put("value", this.gefiltertNachDringlichkeit(dringlichkeit).size()));				
+				//map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
+			}
+		return json.toString();
+	}
+	
 	public String countDringlichkeit(){
 //		HashMap<Integer, Integer> map = new HashMap<>();
 		JSONArray json = new JSONArray();
@@ -75,10 +86,10 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 						counter++;
 					}
 //					map.put(currentValue, this.counter);
-					json.put(new JSONObject()
-							.put("id", currentValue)
-							.put("value", this.counter));	
 				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));	
 			}
 		return json.toString();
 	}
@@ -100,7 +111,7 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 			minValue=0;
 		}
 		
-		currentValue = 0;	
+		currentValue = 0;
 		counter = 0;
 		for(int alter = minValue; alter <= maxValue; alter++){
 			currentValue = alter;
@@ -120,5 +131,54 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 //			});
 		return json.toString();
 	}
-
+	
+	public int countNachZeit(Date vonDatum, Date bisDatum){
+		//JSONArray json = new JSONArray();
+		counter = 0;
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getStartdate().after(vonDatum) && Aufenthalt.getStartdate().after(bisDatum)){
+					counter++;
+			}
+		});
+		/*json.put(new JSONObject()
+				.put("id", currentValue)
+				.put("value", this.counter)
+		);
+		//return json.toString();*/
+		return this.counter;
+	}
+	
+	public int countNachEinlieferungsart(String einlieferungsart){
+		//JSONArray json = new JSONArray();
+		counter = 0;
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getEinweisungsart().equals(einlieferungsart)){
+					counter++;
+			}
+		});
+		/*json.put(new JSONObject()
+				.put("id", currentValue)
+				.put("value", this.counter)
+		);
+		return json.toString();*/
+		return counter;
+	}
+	
+	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart){
+		//JSONArray json = new JSONArray();
+		counter = 0;
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getStartdate().after(vonDatum) && Aufenthalt.getStartdate().after(bisDatum) &&
+				Aufenthalt.getEinweisungsart().equals(einlieferungsart)){
+					counter++;
+			}
+		});
+		/*json.put(new JSONObject()
+				.put("id", currentValue)
+				.put("value", this.counter)
+		);
+		return json.toString();*/
+		return counter;
+	}
+	
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 
+import converter.IStringToDate;
+import converter.impl.StringToDate;
 import entity.Diagnose;
 import services.IAufenthaltService;
 import services.AufenthaltServiceMapImpl;
@@ -110,8 +112,11 @@ public class Application {
 //
 //			
 //			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
-//			System.out.println(as.countDringlichkeit());
-//			System.out.println(as.countAlter());
-
+		    IStringToDate strtoD = new StringToDate();
+			System.out.println(as.countDringlichkeit());
+			System.out.println(as.countAlter());//im Alter null stimmt es noch nicht, da -0,xxx mitgezaehlt wird. Vermutlich 
+			System.out.println(as.countNachEinlieferungsart("Rettungsdienst"));
+			System.out.println(as.countNachZeit(strtoD.convertDate("2021-12-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+			System.out.println(as.countNachZeitUndEinlieferungsart(strtoD.convertDate("2021-12-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00"), "Rettungsdienst"));
 	}
 }
