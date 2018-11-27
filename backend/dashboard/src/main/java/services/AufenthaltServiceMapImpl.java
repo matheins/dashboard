@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import entity.Aufenthalt;
 
 public class AufenthaltServiceMapImpl implements AufenthaltService{
@@ -12,6 +15,7 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 	private int minValue;//bei Alter: minimaler Wert
 	private int maxValue;//bei Alter: maximaler Wert
 	private int counter = 0;//wie viel es aktuell von dem zu zaehlenden Wert gibt.
+	
 	private HashMap<String, Aufenthalt> aufenthaltMap;
 	private int countDringlichkeit = 0;
 	
@@ -55,21 +59,13 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 		return map;
 	}
 	
-/*	public HashMap<Integer,Integer> countDringlichkeit(){
-		HashMap<Integer, Integer> map = new HashMap<>();
-		
-			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
-				
-				map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
-			}
-		return map;
-	}*/
-	
 	//die naechsten drei Methoden funktionieren alle nicht, da innerhalb der foreach-Schleife wohl eine neue
 	//"interne" Klasse erzeugt wird und die lokale Variable count/countDringlichkeit nicht zugreifbar ist.
 	//Hilfe von Herrn Rauch erbeten.
-	public HashMap<Integer,Integer> countDringlichkeit(){
-		HashMap<Integer, Integer> map = new HashMap<>();
+	public String countDringlichkeit(){
+//		HashMap<Integer, Integer> map = new HashMap<>();
+		JSONArray json = new JSONArray();
+		
 		currentValue = 0;//da der Zaehler fuer alle Klassen gilt, muss er vor dem Hochzaehlen auf Null gesetzt werden.
 			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
 				currentValue++;	
@@ -78,15 +74,19 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 					if(Aufenthalt.getDringlichkeit()==currentValue){
 						counter++;
 					}
-					map.put(currentValue, this.counter);
+//					map.put(currentValue, this.counter);
+					json.put(new JSONObject()
+							.put("id", currentValue)
+							.put("value", this.counter));	
 				});
 			}
-		return map;
+		return json.toString();
 	}
 	
-	public HashMap<Integer,Integer> countAlter(){
+	public String countAlter(){
 		//wie soll mit negativen Altersangaben umgegangen werden? Vorlaeufig Datensaetze ignorieren, vermutlich fehlerhafte Zufallsdaten
-		HashMap<Integer, Integer> map = new HashMap<>();
+//		HashMap<Integer, Integer> map = new HashMap<>();
+		JSONArray json = new JSONArray();
 		maxValue = 0;//groesstes Alter, welches vorkommt
 		minValue = 100;//setze juengstes Alter auf fiktiven Wert von 100
 		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
@@ -110,12 +110,15 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 					counter++;
 				}
 			});
-			map.put(currentValue, this.counter);
+//			map.put(currentValue, this.counter);
+			json.put(new JSONObject()
+					.put("id", currentValue)
+					.put("value", this.counter));
 		}
 //		System.out.println(this.minValue + "," + this.maxValue);
 //			map.put(currentValue, this.counter);
 //			});
-		return map;
+		return json.toString();
 	}
 
 }

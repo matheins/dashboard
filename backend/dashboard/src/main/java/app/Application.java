@@ -7,8 +7,10 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 
 import entity.Diagnose;
-import services.AufenthaltService;
+import services.IAufenthaltService;
 import services.AufenthaltServiceMapImpl;
+import services.IDiagnoseService;
+import services.DiagnoseServiceMapImpl;
 import services.responses.CorsFilter;
 import services.responses.StandardResponse;
 import services.responses.StatusResponse;
@@ -22,8 +24,9 @@ public class Application {
 	
 	public static void main(String[] args) throws IOException {
 			
-			DiagnosenManager dm = new DiagnosenManager();
-			AufenthaltService as = new AufenthaltServiceMapImpl();
+			IDiagnoseService ds = new DiagnoseServiceMapImpl();
+			DiagnosenManager dm = new DiagnosenManager(ds);
+			IAufenthaltService as = new AufenthaltServiceMapImpl();
 			AufenthaltManager am = new AufenthaltManager(as);
 			
 			
@@ -52,11 +55,32 @@ public class Application {
 				 
 		     });
 		     
-//		     get("/aufenthalte", (request, response) -> {
-//				 response.type("application/json");
-//				    return new Gson().toJson(
-//				      as.getAufenthalte());
-//		     });
+
+		     //es wird immer nur eine begrenzte anzahl ausgegeben
+		     get("/diagnosen", (request, response) -> {
+				 response.type("application/json");
+				 String start = request.queryParams("start");
+				 String size = request.queryParams("size");
+				 return new Gson().toJson(
+						 ds.getDiagnosenPaginiert(Integer.parseInt(start), Integer.parseInt(size)));
+				 
+		     });
+		     
+		     
+		     
+		     get("/aufenthalte", (request, response) -> {
+				 response.type("application/json");
+				    return new Gson().toJson(
+				      as.getAufenthalte());
+		     });
+
+
+		     get("/aufenthalte/dringlichkeit", (request, response) -> {
+				 response.type("application/json");
+				    return as.countDringlichkeit();
+		     });
+
+		     
 		     
 //		     get("/diagnosen", (request, response) -> {
 //				 response.type("application/json");
@@ -86,7 +110,8 @@ public class Application {
 //
 //			
 //			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
-			System.out.println(as.countDringlichkeit());
-			System.out.println(as.countAlter());
+//			System.out.println(as.countDringlichkeit());
+//			System.out.println(as.countAlter());
+
 	}
 }

@@ -8,7 +8,7 @@ import com.opencsv.CSVReader;
 
 import converter.IStringToDate;
 import converter.impl.StringToDate;
-import services.AufenthaltService;
+import services.IAufenthaltService;
 import services.AufenthaltServiceMapImpl;
 import entity.Aufenthalt;
 
@@ -19,9 +19,9 @@ public class AufenthaltManager {
 	
 	//private Collection <Aufenthalt> aufenthalte;
 	//private AufenthaltService as = new AufenthaltServiceMapImpl();
-	private AufenthaltService as;
+	private IAufenthaltService as;
 	
-	public AufenthaltManager(AufenthaltService as) {
+	public AufenthaltManager(IAufenthaltService as) {
 		//this.aufenthalte = new ArrayList<Aufenthalt>();
 		this.as = as ;
 	}
