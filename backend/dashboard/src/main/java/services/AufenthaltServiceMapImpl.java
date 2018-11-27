@@ -8,8 +8,16 @@ import java.util.List;
 import entity.Aufenthalt;
 
 public class AufenthaltServiceMapImpl implements AufenthaltService{
+	private int currentValue;//der aktuelle Wert, was gezaehlt wird: Dringlichkeit = 1, = 2, etc.
+	private int minValue;//bei Alter: minimaler Wert
+	private int maxValue;//bei Alter: maximaler Wert
+	private int counter = 0;//wie viel es aktuell von dem zu zaehlenden Wert gibt.
 	private HashMap<String, Aufenthalt> aufenthaltMap;
 	private int countDringlichkeit = 0;
+	
+	private int counter(){
+		return counter++;
+	}
 	
 	public AufenthaltServiceMapImpl(){
 		 aufenthaltMap = new HashMap<>();
@@ -47,7 +55,7 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 		return map;
 	}
 	
-	public HashMap<Integer,Integer> countDringlichkeit(){
+/*	public HashMap<Integer,Integer> countDringlichkeit(){
 		HashMap<Integer, Integer> map = new HashMap<>();
 		
 			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
@@ -55,55 +63,59 @@ public class AufenthaltServiceMapImpl implements AufenthaltService{
 				map.put(dringlichkeit, this.gefiltertNachDringlichkeit(dringlichkeit).size());
 			}
 		return map;
-	}
+	}*/
 	
 	//die naechsten drei Methoden funktionieren alle nicht, da innerhalb der foreach-Schleife wohl eine neue
 	//"interne" Klasse erzeugt wird und die lokale Variable count/countDringlichkeit nicht zugreifbar ist.
 	//Hilfe von Herrn Rauch erbeten.
-/*	public HashMap<Integer,Integer> countDringlichkeitDirekt(){
+	public HashMap<Integer,Integer> countDringlichkeit(){
 		HashMap<Integer, Integer> map = new HashMap<>();
-		
-			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
-				int count = 0;
+		currentValue = 0;//da der Zaehler fuer alle Klassen gilt, muss er vor dem Hochzaehlen auf Null gesetzt werden.
+			for(int dringlichkeit = 1; dringlichkeit <= 5; dringlichkeit++){
+				currentValue++;	
+				counter = 0;
 				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
-					if(Aufenthalt.getDringlichkeit()==dringlichkeit){
-						count++;
+					if(Aufenthalt.getDringlichkeit()==currentValue){
+						counter++;
 					}
-				map.put(dringlichkeit, count);
+					map.put(currentValue, this.counter);
 				});
 			}
 		return map;
 	}
 	
-	public HashMap<Integer,Integer> countDringlichkeitClassVariable(){
+	public HashMap<Integer,Integer> countAlter(){
+		//wie soll mit negativen Altersangaben umgegangen werden? Vorlaeufig Datensaetze ignorieren, vermutlich fehlerhafte Zufallsdaten
 		HashMap<Integer, Integer> map = new HashMap<>();
-		
-			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
-				countDringlichkeit = 0;
-				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
-					if(Aufenthalt.getDringlichkeit()==dringlichkeit){
-						this.countDringlichkeit++;
-					}
-				map.put(dringlichkeit, countDringlichkeit);
-				});
+		maxValue = 0;//groesstes Alter, welches vorkommt
+		minValue = 100;//setze juengstes Alter auf fiktiven Wert von 100
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getAlter()>maxValue){
+				maxValue = Aufenthalt.getAlter();
+			} else if(Aufenthalt.getAlter()<minValue){
+				minValue = Aufenthalt.getAlter();
 			}
+		});
+		if(minValue<0){
+			minValue=0;
+		}
+		
+		currentValue = 0;	
+		counter = 0;
+		for(int alter = minValue; alter <= maxValue; alter++){
+			currentValue = alter;
+			counter = 0;
+			this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+				if(Aufenthalt.getAlter()==currentValue){
+					counter++;
+				}
+			});
+			map.put(currentValue, this.counter);
+		}
+//		System.out.println(this.minValue + "," + this.maxValue);
+//			map.put(currentValue, this.counter);
+//			});
 		return map;
 	}
-	
-	public ArrayList<Integer> countDringlichkeitArrayList(){
-		ArrayList<Integer> list = new ArrayList<>();
-		
-			for(int dringlichkeit = 0; dringlichkeit <= 5; dringlichkeit++){
-				int count = 0;
-				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
-					if(Aufenthalt.getDringlichkeit()==dringlichkeit){
-						count++;
-					}
-				list.add(count);
-				});
-			}
-		return list;
-	}
-	*/
 
 }
