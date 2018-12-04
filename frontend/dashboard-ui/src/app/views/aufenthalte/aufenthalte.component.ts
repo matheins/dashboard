@@ -46,8 +46,7 @@ export class AufenthalteComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.aufenthaltService.getAllAufenthalte()
-    //     .subscribe(data => this.aufenthalte = data);
+
 
     this.loadData();
 
