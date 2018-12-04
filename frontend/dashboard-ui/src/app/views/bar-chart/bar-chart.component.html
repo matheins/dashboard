@@ -1,12 +1,7 @@
 <div class="container">
   <div class="col-sm text-center">
     <h2 class="text-center">Demo Bar-Chart</h2>
-    <canvas baseChart
-          [data]="barChartData"
-          [labels]="barChartLabels"
-          [chartType]="barChartType"
-          [options]="barChartOptions"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+    <canvas id="canvas"></canvas>
       </div>
 </div>
+

@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerRangeComponent } from './tools/datepicker-range/datepicker-range.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
+import { AufenthaltService } from './services/aufenthalt.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component'
     NgbModule,
     FontAwesomeModule,
   ],
-  providers: [PatientService],
+  providers: [PatientService, AufenthaltService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
