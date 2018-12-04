@@ -26,7 +26,7 @@ export class BarChartComponent implements OnInit {
   //           "#36A2EB"
   //           ]}
 
-
+  title = "Dringlichkeiten";
   chart: Chart;
   dringlichkeiten: IDringlichkeit[] = [];
 
@@ -58,7 +58,7 @@ export class BarChartComponent implements OnInit {
         labels: this.dringlichkeiten.map(x => x.id),
         datasets: [
           {
-            label: 'Dringlichkeiten',
+            label: ['Dringlichkeiten'],
             data: this.dringlichkeiten.map(x => x.value),
             backgroundColor: ['#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED', '#36A2EB']
           }
