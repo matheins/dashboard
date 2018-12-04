@@ -144,7 +144,9 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 //			});
 		return json.toString();
 	}
-	
+
+	/*
+<<<<<<< HEAD
 	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum){
 		boolean jahreswechsel = false;
 		int lastWeekOfTheYear = 0;
@@ -177,6 +179,14 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 				json.put(new JSONObject()
 						.put("id", currentValue)
 						.put("value", this.counter));
+=======
+	public int countAufenthaltNachZeit(Date vonDatum, Date bisDatum){
+		//JSONArray json = new JSONArray();
+		counter = 0;
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+			if(Aufenthalt.getStartdate().after(vonDatum) && Aufenthalt.getStartdate().after(bisDatum)){
+					counter++;
+>>>>>>> branch 'master' of https://github.com/matheins/dashboard.git
 			}
 		} else{
 			//das Jahr bleibt nicht das gleiche, nach Ablauf des Jahres muss man die Wochenzahl wieder auf 1 setzen.
@@ -264,7 +274,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		}
 		return json.toString();
 	}
-	
+	*/
 	public Set<String> listeEinlieferungsarten(){
 		Set<String> listeEinlieferungsarten = new HashSet<>();
 		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
@@ -291,7 +301,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		}
 		return json.toString();
 	}
-	
+	/*
 	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart){
 		//JSONArray json = new JSONArray();
 		counter = 0;
@@ -306,7 +316,8 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 				.put("value", this.counter)
 		);
 		return json.toString();*/
-		return counter;
-	}
+//		return counter;
+//	}
+
 	
 }

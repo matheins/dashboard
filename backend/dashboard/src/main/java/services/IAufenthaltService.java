@@ -19,7 +19,7 @@ public interface IAufenthaltService {
 	public String countDringlichkeit();
 	public String countAlter();
 	public String countEinlieferungsarten();
-	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart);
-	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum);
-	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum);
+//	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart);
+//	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum);
+//	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum);
 }
