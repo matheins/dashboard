@@ -1,10 +1,18 @@
 package services;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +24,11 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 	private int minValue;//bei Alter: minimaler Wert
 	private int maxValue;//bei Alter: maximaler Wert
 	private int counter = 0;//wie viel es aktuell von dem zu zaehlenden Wert gibt.
+	
+	//fuer Zeit
+	private ZoneId defaultZoneId = ZoneId.systemDefault();
+	private WeekFields week = WeekFields.ISO;
+	private TemporalField temporalField;
 	
 	private HashMap<String, Aufenthalt> aufenthaltMap;
 	private int countDringlichkeit = 0;
@@ -132,36 +145,151 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 	
-	public int countNachZeit(Date vonDatum, Date bisDatum){
-		//JSONArray json = new JSONArray();
-		counter = 0;
-		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
-			if(Aufenthalt.getStartdate().after(vonDatum) && Aufenthalt.getStartdate().after(bisDatum)){
-					counter++;
+	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum){
+		boolean jahreswechsel = false;
+		int lastWeekOfTheYear = 0;
+		JSONArray json = new JSONArray();
+		temporalField = week.weekOfWeekBasedYear();
+		
+		//kleinste Kalenderwoche
+		minValue=vonDatum.toInstant().atZone(defaultZoneId).toLocalDate().get(temporalField);
+		//groesste Kalenderwoche
+		maxValue=bisDatum.toInstant().atZone(defaultZoneId).toLocalDate().get(temporalField);
+		if(!(vonDatum.getYear()==bisDatum.getYear())){
+			//die beiden Daten gehen ueber den Jahreswechsel hinaus.
+			jahreswechsel = true;
+			int year = vonDatum.getYear();
+			LocalDate lastDayOfTheYear = LocalDate.of(year, 12, 31);
+			//ein Jahr kann 52 oder 53 Wochen haben, muss daher geprueft werden.
+			lastWeekOfTheYear = lastDayOfTheYear.get(temporalField);
+		}
+		currentValue = 0;
+		if (!jahreswechsel){
+			//das Jahr bleibt das gleiche, man braucht die Wochenzahl nicht wieder bei 1 anfangen.
+			for(int woche = minValue; woche <= maxValue; woche++){
+				currentValue = woche;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().get(temporalField)==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
 			}
-		});
-		/*json.put(new JSONObject()
-				.put("id", currentValue)
-				.put("value", this.counter)
-		);
-		//return json.toString();*/
-		return this.counter;
+		} else{
+			//das Jahr bleibt nicht das gleiche, nach Ablauf des Jahres muss man die Wochenzahl wieder auf 1 setzen.
+			for(int woche = minValue; woche <= lastWeekOfTheYear; woche++){
+				currentValue = woche;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().get(temporalField)==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
+			}
+			for(int woche = 1; woche <= maxValue; woche++){
+				currentValue = woche;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().get(temporalField)==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
+			}
+		}
+		return json.toString();
 	}
 	
-	public int countNachEinlieferungsart(String einlieferungsart){
-		//JSONArray json = new JSONArray();
-		counter = 0;
-		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
-			if(Aufenthalt.getEinweisungsart().equals(einlieferungsart)){
-					counter++;
+	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum){
+		boolean jahreswechsel = false;
+		JSONArray json = new JSONArray();
+		
+		//kleinster Kalendermonat
+		minValue=vonDatum.toInstant().atZone(defaultZoneId).toLocalDate().getMonthValue();
+		//groesster Kalendermonat
+		maxValue=bisDatum.toInstant().atZone(defaultZoneId).toLocalDate().getMonthValue();
+		if(!(vonDatum.getYear()==bisDatum.getYear())){
+			//die beiden Daten gehen ueber den Jahreswechsel hinaus.
+			jahreswechsel = true;
+		}
+		currentValue = 0;
+		if (!jahreswechsel){
+			//das Jahr bleibt das gleiche, man braucht die Monatszahl nicht wieder bei 1 anfangen.
+			for(int monat = minValue; monat <= maxValue; monat++){
+				currentValue = monat;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().getMonthValue()==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
 			}
+		} else{
+			//das Jahr bleibt nicht das gleiche, nach Ablauf des Jahres muss man die Wochenzahl wieder auf 1 setzen.
+			for(int monat = minValue; monat <= 12; monat++){
+				currentValue = monat;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().getMonthValue()==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
+			}
+			for(int month = 1; month <= maxValue; month++){
+				currentValue = month;
+				counter = 0;
+				this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+					if(Aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDate().getMonthValue()==currentValue){
+						counter++;
+					}
+				});
+				json.put(new JSONObject()
+						.put("id", currentValue)
+						.put("value", this.counter));
+			}
+		}
+		return json.toString();
+	}
+	
+	public Set<String> listeEinlieferungsarten(){
+		Set<String> listeEinlieferungsarten = new HashSet<>();
+		this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+				listeEinlieferungsarten.add(Aufenthalt.getEinweisungsart());
 		});
-		/*json.put(new JSONObject()
-				.put("id", currentValue)
-				.put("value", this.counter)
-		);
-		return json.toString();*/
-		return counter;
+		return listeEinlieferungsarten;
+	}
+	
+	public String countEinlieferungsarten(){
+		JSONArray json = new JSONArray();
+		Iterator <String> it = this.listeEinlieferungsarten().iterator();
+		while(it.hasNext()){
+			String einlieferungsart = it.next();
+			counter = 0;
+			this.aufenthaltMap.forEach((String, Aufenthalt) -> {
+				if(Aufenthalt.getEinweisungsart().equals(einlieferungsart)){
+					counter++;
+				}
+			});
+			json.put(new JSONObject()
+					.put("id", einlieferungsart)
+					.put("value", this.counter)
+			);
+		}
+		return json.toString();
 	}
 	
 	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart){

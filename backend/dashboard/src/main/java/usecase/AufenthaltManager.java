@@ -45,7 +45,6 @@ public class AufenthaltManager {
 		if(weiter){
 			reader.readNext();//ueberspringe die Kopfzeile der CSV
 			while ((nextLine = reader.readNext()) != null) {
-				as.addAufenthalt(
 					aAufenthalt = new Aufenthalt(
 						nextLine[0],//ID
 						Integer.parseInt(nextLine[3]),//Dringlichkeit
@@ -54,11 +53,12 @@ public class AufenthaltManager {
 						nextLine[6],//Einweisungsart
 						nextLine[1],//PLZ
 						(int) Double.parseDouble(nextLine[2].replace(',','.'))//Alter
-					)
-				);
-				System.out.println(aAufenthalt.toString());	
-				}
-			try{
+					);
+					if(!(aAufenthalt.getAlter()<0)){
+						as.addAufenthalt(aAufenthalt);
+					}
+					System.out.println(aAufenthalt.toString());
+			} try{
 				System.out.println("Import der Aufenthaltsdaten aus patients.csv abgeschlossen!");
 				patientenFile.close();
 			} catch(IOException e){

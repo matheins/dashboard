@@ -115,8 +115,9 @@ public class Application {
 		    IStringToDate strtoD = new StringToDate();
 			System.out.println(as.countDringlichkeit());
 			System.out.println(as.countAlter());//im Alter null stimmt es noch nicht, da -0,xxx mitgezaehlt wird. Vermutlich 
-			System.out.println(as.countNachEinlieferungsart("Rettungsdienst"));
-			System.out.println(as.countNachZeit(strtoD.convertDate("2021-12-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
-			System.out.println(as.countNachZeitUndEinlieferungsart(strtoD.convertDate("2021-12-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00"), "Rettungsdienst"));
+			System.out.println(as.countEinlieferungsarten());
+			System.out.println(as.countAufenthaltNachMonaten(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2021-02-07 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+			System.out.println();
 	}
 }

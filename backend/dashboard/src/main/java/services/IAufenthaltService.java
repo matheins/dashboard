@@ -18,7 +18,8 @@ public interface IAufenthaltService {
 	public boolean aufenthaltExists(String id);
 	public String countDringlichkeit();
 	public String countAlter();
-	public int countNachEinlieferungsart(String einlieferungsart);
+	public String countEinlieferungsarten();
 	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart);
-	public int countNachZeit(Date vonDatum, Date bisDatum);
+	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum);
+	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum);
 }
