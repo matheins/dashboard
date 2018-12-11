@@ -149,7 +149,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 
-	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum){
+/*	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;
 		int lastWeekOfTheYear = 0;
 		JSONArray json = new JSONArray();
@@ -159,13 +159,13 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 				.sorted((a1, a2) -> a1.getStartdate().compareTo(a2.getStartdate()).collect(Collectors
 						.groupingBy(//(a1, a2) -> a1.getStartdate().
 								aufenthalt -> aufenthalt.getStartdate().toInstant().atZone(defaultZoneId).toLocalDateTime().get(temporalField)//) -> aufenthalt.getStartdate().)//(aufenthalt -> aufenthalt.getStartdate(). > 150, groupingBy(Employee::getCity, counting()));
-						), groupingBy(Aufenthalt.getEinweisungsart))));
+						), groupingBy(Aufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
 //				toString();
 		System.out.println("h");
 		return result.toString();
 		
 		}
-	
+	*/
 	public String countAufenthaltNachWochenNeu(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;
 		int lastWeekOfTheYear = 0;
