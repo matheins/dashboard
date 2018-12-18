@@ -39,36 +39,28 @@
             </ul>
           </div>
         </nav>
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Datum einstellen
-              </button>
-
-
-
-          </div>
-
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datum einstellen</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                      <app-datepicker-range></app-datepicker-range>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"> Speichern</button>
-                  </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Graph wählen
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" [routerLink]="['/bar-chart']" routerLinkActive="router-link-active">Dringlichkeiten</a>
+                  <a class="dropdown-item" [routerLink]="['/line-chart']" routerLinkActive="router-link-active">Anz. Einlieferungen</a>
                 </div>
               </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+
+              <router-outlet></router-outlet>
             </div>
-    <router-outlet></router-outlet>
+        </main>
+      </div>
+    </div>
+
+
+
 
 
 

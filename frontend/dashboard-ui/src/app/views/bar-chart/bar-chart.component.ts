@@ -3,6 +3,7 @@ import { AufenthaltService } from 'src/app/services/aufenthalt.service';
 import { IDringlichkeit } from 'src/app/interfaces/dringlichkeit';
 import { ChartsModule } from 'ng2-charts';
 import { Chart } from 'chart.js';
+import { IAufenthalt } from 'src/app/interfaces/aufenthalt';
 
 
 
@@ -13,22 +14,10 @@ import { Chart } from 'chart.js';
 })
 export class BarChartComponent implements OnInit {
 
-
-
-  // public barChartLabels:String[] = ["1", "2", "3", "4", "5"];
-  // public barChartData:number[] = this.dringlichkeiten;
-  // public barChartType:string = 'bar';
-  // public barChartOptions:any = {'backgroundColor': [
-  //              "#FF6384",
-  //           "#4BC0C0",
-  //           "#FFCE56",
-  //           "#E7E9ED",
-  //           "#36A2EB"
-  //           ]}
-
-  title = "Dringlichkeiten";
+  title: String;
   chart: Chart;
   dringlichkeiten: IDringlichkeit[] = [];
+  aufenthalte: IAufenthalt[] = [];
 
 
   constructor(private aufenthaltService: AufenthaltService) {
@@ -36,22 +25,27 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loadData();
+    this.loadDringlichkeitenData();
 
   }
 
-  loadData(){
+
+
+  loadDringlichkeitenData(){
     this.aufenthaltService.getDringlichkeiten()
     .subscribe( data => {
+      this.title = "Dringlichkeiten";
       this.dringlichkeiten = data;
-      this.createChart();
+      this.createDringlichkeitenChart();
 
       //dringlichkeiten-Array full
       console.log(this.dringlichkeiten);
     });
   }
 
-  createChart(){
+
+
+  createDringlichkeitenChart(){
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
