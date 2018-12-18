@@ -150,7 +150,69 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 
+	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum){
+//		boolean jahreswechsel = false;
+		int lastWeekOfTheYear = 0;
+		JSONArray json = new JSONArray();
+		temporalField = week.weekOfWeekBasedYear();
+
+		Stream <Aufenthalt> sorted = aufenthaltMap.values().stream()//
+				.sorted((a1, a2) -> a1.getStartdate()
+									  .compareTo(a2.getStartdate()));
+		
+		Map<Integer, Integer> mapGroupedByWeek = sorted.collect(Collectors.groupingBy(
+								aufenthalt -> aufenthalt.getStartdate()
+														.toInstant()
+														.atZone(defaultZoneId)
+														.toLocalDateTime() ));
+		
+		
+														
+				//										groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting());
+														
+														//) -> aufenthalt.getStartdate().)//(aufenthalt -> aufenthalt.getStartdate(). > 150, groupingBy(Employee::getCity, counting()));
+//		Map<Integer, Map<String, Integer>> mapGroupedByWeekAndEinweisungsart = mapGroupedByWeek.
+//				collect(Collectors.groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting()));
+//							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
+//				toString();
+//		System.out.println("h");
+		return mapGroupedByWeek.toString();
+		
+		}
+
+	
 	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum){
+//		boolean jahreswechsel = false;
+		int lastWeekOfTheYear = 0;
+		JSONArray json = new JSONArray();
+		temporalField = week.weekOfWeekBasedYear();
+
+		Stream <Aufenthalt> sorted = aufenthaltMap.values().stream()//
+				.sorted((a1, a2) -> a1.getStartdate()
+									  .compareTo(a2.getStartdate()));
+		
+		Map<Object, List<Aufenthalt>> mapGroupedByWeek = sorted.collect(Collectors.groupingBy(
+								aufenthalt -> aufenthalt.getStartdate()
+														.toInstant()
+														.atZone(defaultZoneId)
+														.toLocalDateTime()
+														.get(temporalField) ));
+		
+		
+														
+				//										groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting());
+														
+														//) -> aufenthalt.getStartdate().)//(aufenthalt -> aufenthalt.getStartdate(). > 150, groupingBy(Employee::getCity, counting()));
+//		Map<Integer, Map<String, Integer>> mapGroupedByWeekAndEinweisungsart = mapGroupedByWeek.
+//				collect(Collectors.groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting()));
+//							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
+//				toString();
+//		System.out.println("h");
+		return mapGroupedByWeek.toString();
+		
+		}
+	
+	public String countAufenthaltNachWochenNeu3(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;
 		int lastWeekOfTheYear = 0;
 		JSONArray json = new JSONArray();
@@ -165,16 +227,23 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 														.toInstant()
 														.atZone(defaultZoneId)
 														.toLocalDateTime()
-														.get(temporalField).counting()));
+														.get(temporalField).counting(), 
+														
+														groupingBy(aufenthalt -> aufenthalt.getEinweisungsart().counting()) ));
+														
+				//										groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting());
 														
 														//) -> aufenthalt.getStartdate().)//(aufenthalt -> aufenthalt.getStartdate(). > 150, groupingBy(Employee::getCity, counting()));
-		Map<Integer, Map<String, Integer>> mapGroupedByWeekAndEinweisungsart = mapGroupedByWeek.
-							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
+/*		Map<Integer, Map<String, Integer>> mapGroupedByWeekAndEinweisungsart = mapGroupedByWeek.
+				collect(Collectors.groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting()));
+							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart*/
 //				toString();
 		System.out.println("h");
 		return result.toString();
 		
 		}
+	
+		
 	
 	public String countAufenthaltNachWochenNeu(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;
