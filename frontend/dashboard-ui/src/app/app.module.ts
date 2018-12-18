@@ -15,6 +15,7 @@ import { DatepickerRangeComponent } from './tools/datepicker-range/datepicker-ra
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
 import { AufenthaltService } from './services/aufenthalt.service';
+import { HomeComponent } from './views/home/home.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AufenthaltService } from './services/aufenthalt.service';
     LineChartComponent,
     DatepickerRangeComponent,
     AufenthalteComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

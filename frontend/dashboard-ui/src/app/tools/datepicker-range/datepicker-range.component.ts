@@ -21,11 +21,14 @@ export class DatepickerRangeComponent {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      console.log(date);
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
+      console.log(date);
     } else {
       this.toDate = null;
       this.fromDate = date;
+      console.log(date);
     }
   }
 
