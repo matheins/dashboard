@@ -6,7 +6,6 @@ import { PieChartComponent } from './views/pie-chart/pie-chart.component';
 import { BarChartComponent } from './views/bar-chart/bar-chart.component';
 import { LineChartComponent } from './views/line-chart/line-chart.component';
 import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
-import { HomeComponent } from './views/home/home.component';
 
 const routes: Routes = [
   {
@@ -27,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: LineChartComponent,
   },
   {
     path: 'line-chart',
