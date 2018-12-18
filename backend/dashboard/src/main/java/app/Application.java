@@ -81,8 +81,16 @@ public class Application {
 				 response.type("application/json");
 				    return as.countDringlichkeit();
 		     });
-
 		     
+		     get("/aufenthalte/alter", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countAlter();
+		     });
+
+		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countEinlieferungsarten();
+		     });
 		     
 //		     get("/diagnosen", (request, response) -> {
 //				 response.type("application/json");
@@ -118,7 +126,7 @@ public class Application {
 			System.out.println(as.countEinlieferungsarten());
 			System.out.println(as.countAufenthaltNachMonaten(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 //			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2021-02-07 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
-			System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+			//System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 			//System.out.println(as.gefiltertNachDringlichkeit(1).toString());
 	}
 }
