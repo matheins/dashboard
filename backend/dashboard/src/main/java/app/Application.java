@@ -42,47 +42,54 @@ public class Application {
 			 
 			 CorsFilter.apply(); //APPLY THIS BEFORE MAPPING THE ROUTES
 			
+			 //Hello World
 		     get("/hello", (req, res) -> "Hello World");
-		    
 		     
-
-		     
-		     //es wird immer nur eine begrenzte anzahl ausgegeben
+		     //Aufenthalt Objekte
 		     get("/aufenthalte", (request, response) -> {
 				 response.type("application/json");
+				 
 				 String start = request.queryParams("start");
 				 String size = request.queryParams("size");
-				 return new Gson().toJson(
-						 as.getAufenthaltePaginiert(Integer.parseInt(start), Integer.parseInt(size)));
+				 
+				 if(start == null && size == null ){
+					return new Gson().toJson(as.getAufenthalte());		 
+				 }else{
+					return new Gson().toJson( as.getAufenthaltePaginiert(Integer.parseInt(start), Integer.parseInt(size)));
+				 }
 				 
 		     });
 		     
 
-		     //es wird immer nur eine begrenzte anzahl ausgegeben
+		     //Diagnosen-Objekte
 		     get("/diagnosen", (request, response) -> {
 				 response.type("application/json");
 				 String start = request.queryParams("start");
 				 String size = request.queryParams("size");
-				 return new Gson().toJson(
+				 if(start == null && size == null){
+					return new Gson().toJson(ds.getDiagnosen());
+				 }else{
+				 	return new Gson().toJson(
 						 ds.getDiagnosenPaginiert(Integer.parseInt(start), Integer.parseInt(size)));
-				 
+				 }
 		     });
 		     
-		     
-		     
-		     get("/aufenthalte", (request, response) -> {
-				 response.type("application/json");
-				    return new Gson().toJson(
-				      as.getAufenthalte());
-		     });
 
-
+		     //Aufenthalte nach Dringlichkeit summiert
 		     get("/aufenthalte/dringlichkeit", (request, response) -> {
 				 response.type("application/json");
 				    return as.countDringlichkeit();
 		     });
-
 		     
+		     get("/aufenthalte/alter", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countAlter();
+		     });
+
+		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countEinlieferungsarten();
+		     });
 		     
 //		     get("/diagnosen", (request, response) -> {
 //				 response.type("application/json");
@@ -118,7 +125,8 @@ public class Application {
 			System.out.println(as.countEinlieferungsarten());
 			System.out.println(as.countAufenthaltNachMonaten(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 //			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2021-02-07 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
-			System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+			//System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
+//			System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 			//System.out.println(as.gefiltertNachDringlichkeit(1).toString());
 	}
 }
