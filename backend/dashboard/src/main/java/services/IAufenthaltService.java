@@ -11,6 +11,7 @@ import entity.Aufenthalt;
 
 public interface IAufenthaltService {
 
+	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum);
 	public void addAufenthalt(Aufenthalt aufenthalt);
 	public Collection<Aufenthalt> getAufenthalte();
 	public Aufenthalt getAufenthalt(String id);

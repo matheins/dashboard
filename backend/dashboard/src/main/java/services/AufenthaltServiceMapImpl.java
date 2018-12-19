@@ -6,6 +6,7 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +19,10 @@ import java.util.stream.Stream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import converter.IStringToDate;
 import converter.impl.StringToDate;
@@ -156,16 +161,19 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		JSONArray json = new JSONArray();
 		temporalField = week.weekOfWeekBasedYear();
 
-		Stream <Aufenthalt> sorted = aufenthaltMap.values().stream()//
-				.sorted((a1, a2) -> a1.getStartdate()
-									  .compareTo(a2.getStartdate()));
+		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+//				.sorted((a1, a2) -> a1.getStartdate()
+//									  .compareTo(a2.getStartdate()));
 		
-		Map<Integer, Integer> mapGroupedByWeek = sorted.collect(Collectors.groupingBy(
-								aufenthalt -> aufenthalt.getStartdate()
-														.toInstant()
-														.atZone(defaultZoneId)
-														.toLocalDateTime() ));
-		
+		SortedMap<LocalDate, Long> mapGroupedByWeek = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
+		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+								Aufenthalt::getLocalDate, Collectors.counting())));
+		json.put(mapGroupedByWeek);
+		//System.out.println(mapGroupedByWeek.toString());
+		/*Map<String, Double> avgSalesByCity =
+	  employees.stream().collect(groupingBy(Employee::getCity,
+	                               averagingInt(Employee::getNumSales)));*/
 		
 														
 				//										groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting());
@@ -176,7 +184,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 //							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
 //				toString();
 //		System.out.println("h");
-		return mapGroupedByWeek.toString();
+		return json.toString();
 		
 		}
 
@@ -187,16 +195,20 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		JSONArray json = new JSONArray();
 		temporalField = week.weekOfWeekBasedYear();
 
-		Stream <Aufenthalt> sorted = aufenthaltMap.values().stream()//
+		Stream <Aufenthalt> unsorted = aufenthaltMap.values().stream()//
 				.sorted((a1, a2) -> a1.getStartdate()
 									  .compareTo(a2.getStartdate()));
 		
-		Map<Object, List<Aufenthalt>> mapGroupedByWeek = sorted.collect(Collectors.groupingBy(
+		System.out.println(unsorted.toString());
+		
+		Map<Object, List<Aufenthalt>> mapGroupedByWeek = unsorted.collect(Collectors.groupingBy(
 								aufenthalt -> aufenthalt.getStartdate()
 														.toInstant()
 														.atZone(defaultZoneId)
 														.toLocalDateTime()
 														.get(temporalField) ));
+		
+		
 		
 		
 														

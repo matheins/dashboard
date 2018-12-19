@@ -30,6 +30,7 @@ public class Application {
 			DiagnosenManager dm = new DiagnosenManager(ds);
 			IAufenthaltService as = new AufenthaltServiceMapImpl();
 			AufenthaltManager am = new AufenthaltManager(as);
+			IStringToDate strtoD = new StringToDate();
 			
 			
 			//CSV Dateien einlesen
@@ -85,6 +86,13 @@ public class Application {
 		    	 response.type("application/json");
 		    	 	return as.countAlter();
 		     });
+		     
+		     get("/aufenthalte/zeit/tage", (request, response) -> {
+		    	 response.type("application/json");
+		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
+		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
+		    	 	return as.countAufenthaltNachTage(vonDatum, bisDatum);
+		     });
 
 		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
 		    	 response.type("application/json");
@@ -119,7 +127,6 @@ public class Application {
 //
 //			
 //			HashMap<String, Aufenthalt> mapGefiltert = as.gefiltertNachDringlichkeit(1);
-		    IStringToDate strtoD = new StringToDate();
 			System.out.println(as.countDringlichkeit());
 			System.out.println(as.countAlter());//im Alter null stimmt es noch nicht, da -0,xxx mitgezaehlt wird. Vermutlich 
 			System.out.println(as.countEinlieferungsarten());
@@ -128,5 +135,6 @@ public class Application {
 			//System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 //			System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 			//System.out.println(as.gefiltertNachDringlichkeit(1).toString());
+			System.out.println(as.countAufenthaltNachTage(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2021-08-31 11:42:00")));
 	}
 }

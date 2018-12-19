@@ -1,6 +1,11 @@
 package entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+
+import services.AufenthaltService;
+import services.AufenthaltServiceMapImpl;
 
 public class Aufenthalt {
 	String aufenthaltID;//hier Zahlenwert oder Patientenobjekt?
@@ -95,6 +100,11 @@ public class Aufenthalt {
 				+ ", Startdatum: " + this.getStartdate().toString() + ", Enddatum: "
 				+ this.getEnddate().toString() + ", Einweisungsart: " + this.getEinweisungsart()
 				+ ", PLZ: " + this.getPlz() + ", Alter: " + this.getAlter();
+	}
+	public LocalDate getLocalDate() {
+		return this.getStartdate()
+				.toInstant()
+				.atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 }
