@@ -166,10 +166,10 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 //				.sorted((a1, a2) -> a1.getStartdate()
 //									  .compareTo(a2.getStartdate()));
 		
-		SortedMap<LocalDate, Long> mapGroupedByWeek = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
-		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+		SortedMap<LocalDate, Long> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
+		mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
 								Aufenthalt::getLocalDate, Collectors.counting())));
-		json.put(mapGroupedByWeek);
+		json.put(mapGroupedByDay);
 		//System.out.println(mapGroupedByWeek.toString());
 		/*Map<String, Double> avgSalesByCity =
 	  employees.stream().collect(groupingBy(Employee::getCity,
@@ -188,6 +188,40 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		
 		}
 
+	public String countAufenthaltNachWochenLambda(Date vonDatum, Date bisDatum){
+//		boolean jahreswechsel = false;
+		int lastWeekOfTheYear = 0;
+		JSONArray json = new JSONArray();
+		temporalField = week.weekOfWeekBasedYear();
+
+		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+//				.sorted((a1, a2) -> a1.getStartdate()
+//									  .compareTo(a2.getStartdate()));
+		
+		SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+								(aufenthalt) -> aufenthalt.getLocalDate().get(temporalField), Collectors.counting())));
+		System.out.println(mapGroupedByWeek.toString());
+		json.put(mapGroupedByWeek);
+		//System.out.println(mapGroupedByWeek.toString());
+		/*Map<String, Double> avgSalesByCity =
+	  employees.stream().collect(groupingBy(Employee::getCity,
+	                               averagingInt(Employee::getNumSales)));*/
+		
+														
+				//										groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting());
+														
+														//) -> aufenthalt.getStartdate().)//(aufenthalt -> aufenthalt.getStartdate(). > 150, groupingBy(Employee::getCity, counting()));
+//		Map<Integer, Map<String, Integer>> mapGroupedByWeekAndEinweisungsart = mapGroupedByWeek.
+//				collect(Collectors.groupingBy((aufenthalt) -> aufenthalt.getEinweisungsart().counting()));
+//							));//, groupingBy((aufenthalt) -> aufenthalt.Einweisungsart(), counting()//getAufenthalt::getEinweisungsart));//Aufenthalt.getEinweisungsart
+//				toString();
+//		System.out.println("h");
+		return json.toString();
+		
+		}
+	
 	
 	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;

@@ -25,4 +25,5 @@ public interface IAufenthaltService {
 	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum);
 //	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum);
 	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit);
+	public String countAufenthaltNachWochenLambda(Date vonDatum, Date bisDatum);
 }

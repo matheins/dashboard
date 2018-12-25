@@ -136,5 +136,6 @@ public class Application {
 //			System.out.println(as.countAufenthaltNachWochenNeu2(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 			//System.out.println(as.gefiltertNachDringlichkeit(1).toString());
 			System.out.println(as.countAufenthaltNachTage(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2021-08-31 11:42:00")));
+			System.out.println(as.countAufenthaltNachWochenLambda(strtoD.convertDate("2018-07-31 17:00:47"), strtoD.convertDate("2029-08-31 11:42:00")));
 	}
 }
