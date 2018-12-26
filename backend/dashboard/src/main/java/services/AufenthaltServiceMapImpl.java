@@ -222,6 +222,20 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		
 		}
 	
+	public String countAufenthaltNachMonatenLambda(Date vonDatum, Date bisDatum){
+		JSONArray json = new JSONArray();
+		temporalField = week.weekOfWeekBasedYear();
+
+		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+		
+		SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+								(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting())));
+		json.put(mapGroupedByWeek);
+		return json.toString();
+		
+		}
 	
 	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum){
 //		boolean jahreswechsel = false;

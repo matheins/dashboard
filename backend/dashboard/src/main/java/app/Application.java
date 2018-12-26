@@ -89,16 +89,21 @@ public class Application {
 		    	 	return as.countAlter();
 		     });
 		     
-		     get("/aufenthalte/zeit/wochen", (request, response) -> {
-		    	 response.type("application/json");
-		    	 	return as.countAufenthaltNachWochenLambda(vonDatumExamp, bisDatumExamp);
-		     });
-		     
 		     get("/aufenthalte/zeit/tage", (request, response) -> {
 		    	 response.type("application/json");
 //		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
 //		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
 		    	 	return as.countAufenthaltNachTage(vonDatumExamp, bisDatumExamp);
+		     });
+		     
+		     get("/aufenthalte/zeit/wochen", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countAufenthaltNachWochenLambda(vonDatumExamp, bisDatumExamp);
+		     });
+		     
+		     get("/aufenthalte/zeit/monate", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countAufenthaltNachMonatenLambda(vonDatumExamp, bisDatumExamp);
 		     });
 		     
 		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
