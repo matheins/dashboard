@@ -31,6 +31,8 @@ public class Application {
 			IAufenthaltService as = new AufenthaltServiceMapImpl();
 			AufenthaltManager am = new AufenthaltManager(as);
 			IStringToDate strtoD = new StringToDate();
+			Date vonDatumExamp = strtoD.convertDate("2020-07-31 17:00:47");
+			Date bisDatumExamp = strtoD.convertDate("2021-04-15 17:00:47");
 			
 			
 			//CSV Dateien einlesen
@@ -87,13 +89,18 @@ public class Application {
 		    	 	return as.countAlter();
 		     });
 		     
+		     get("/aufenthalte/zeit/wochen", (request, response) -> {
+		    	 response.type("application/json");
+		    	 	return as.countAufenthaltNachWochenLambda(vonDatumExamp, bisDatumExamp);
+		     });
+		     
 		     get("/aufenthalte/zeit/tage", (request, response) -> {
 		    	 response.type("application/json");
-		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
-		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 	return as.countAufenthaltNachTage(vonDatum, bisDatum);
+//		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
+//		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
+		    	 	return as.countAufenthaltNachTage(vonDatumExamp, bisDatumExamp);
 		     });
-
+		     
 		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
 		    	 response.type("application/json");
 		    	 	return as.countEinlieferungsarten();

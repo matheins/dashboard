@@ -201,8 +201,8 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		
 		SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
 		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
-								(aufenthalt) -> aufenthalt.getLocalDate().get(temporalField), Collectors.counting())));
-		System.out.println(mapGroupedByWeek.toString());
+								(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting())));
+		//System.out.println(mapGroupedByWeek.toString());
 		json.put(mapGroupedByWeek);
 		//System.out.println(mapGroupedByWeek.toString());
 		/*Map<String, Double> avgSalesByCity =
