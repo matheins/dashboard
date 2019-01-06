@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import com.google.gson.JsonElement;
 
 import entity.Aufenthalt;
+import entity.Diagnose;
 
 public interface IAufenthaltService {
 
@@ -20,7 +22,12 @@ public interface IAufenthaltService {
 	public String countAlter();
 	public String countEinlieferungsarten();
 	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit);
+	//die nachfolgenden drei in Johannes' Version ohne boolean
 	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
 	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
 	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
+	public List<Aufenthalt> getAufenthaltNachZeit(Date start, Date end);
+	public List<Aufenthalt> getAufenthaltNachZeitUndTyp(Date start, Date end, String typ);
+	public ArrayList<Aufenthalt> getAufenthaltNachTyp(String einlieferungsart);
+	
 }

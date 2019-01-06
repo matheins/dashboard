@@ -43,5 +43,15 @@ public class DiagnoseServiceMapImpl implements IDiagnoseService{
 		return diagnoseMap.values();
 	}
 
+	
+	public HashMap<String, Diagnose> getDiagnoseMap() {
+		return diagnoseMap;
+	}
+
+	public void setDiagnoseMap(HashMap<String, Diagnose> diagnoseMap) {
+		this.diagnoseMap = diagnoseMap;
+	}
+
+
 
 }

@@ -2,8 +2,12 @@ package services;
 
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.JsonElement;
+
+import entity.Aufenthalt;
 import entity.Diagnose;
 
 public interface IDiagnoseService {
@@ -14,5 +18,7 @@ public interface IDiagnoseService {
 	public Diagnose getDiagnose(String id);
 	public List<Diagnose> getDiagnosenPaginiert(int start, int size);
 	public boolean diagnoseExists(String id);
+	public HashMap<String, Diagnose> getDiagnoseMap();
+	
 
 }
