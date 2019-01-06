@@ -111,11 +111,13 @@ public class Application {
 						 as.getAufenthaltNachZeit(Date.convertDate(start), Date.convertDate(end)));
 		     });
 		     
+		     //Beispiel: http://localhost:4567/aufenthalte/zeit/tage?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&fasseEinweisungsartenZusammen=false
 		     get("/aufenthalte/zeit/tage", (request, response) -> {
 		    	 response.type("application/json");
-//		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
-//		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 	return as.countAufenthaltNachTage(vonDatumExamp, bisDatumExamp, false);
+		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
+		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
+		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
+		    	 	return as.countAufenthaltNachTage(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
 		     });
 		     
 		     // Beispiel: http://localhost:4567/aufenthalte/typ?typ=Einweisung
@@ -128,19 +130,22 @@ public class Application {
 		     });
 		     
 
-		     
+		     //Beispiel: http://localhost:4567/aufenthalte/zeit/wochen?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&fasseEinweisungsartenZusammen=false
 		     get("/aufenthalte/zeit/wochen", (request, response) -> {
 		    	 response.type("application/json");
-//		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
-//		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 	return as.countAufenthaltNachWochen(vonDatumExamp, bisDatumExamp, false);
+		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
+		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
+		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
+		    	 	return as.countAufenthaltNachWochen(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
 		     });
 		     
+		     //Beispiel: http://localhost:4567/aufenthalte/zeit/monate?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&fasseEinweisungsartenZusammen=false
 		     get("/aufenthalte/zeit/monate", (request, response) -> {
 		    	 response.type("application/json");
-//		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
-//		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 	return as.countAufenthaltNachMonaten(vonDatumExamp, bisDatumExamp, false);
+		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
+		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
+		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
+		    	 	return as.countAufenthaltNachMonaten(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
 		     });
 		     
 		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
