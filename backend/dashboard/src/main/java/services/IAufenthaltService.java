@@ -11,7 +11,6 @@ import entity.Aufenthalt;
 
 public interface IAufenthaltService {
 
-	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum);
 	public void addAufenthalt(Aufenthalt aufenthalt);
 	public Collection<Aufenthalt> getAufenthalte();
 	public Aufenthalt getAufenthalt(String id);
@@ -20,10 +19,8 @@ public interface IAufenthaltService {
 	public String countDringlichkeit();
 	public String countAlter();
 	public String countEinlieferungsarten();
-//	public int countNachZeitUndEinlieferungsart(Date vonDatum, Date bisDatum, String einlieferungsart);
-//	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum);
-	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum);
-//	public String countAufenthaltNachWochenNeu2(Date vonDatum, Date bisDatum);
 	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit);
-	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum);
+	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
+	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
+	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
 }

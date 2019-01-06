@@ -155,47 +155,77 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 
-	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum){
+
+	
+	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen){
 		JSONArray json = new JSONArray();
 		temporalField = week.weekOfWeekBasedYear();
 
 		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
 				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
-		
-		SortedMap<LocalDate, Long> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
-		mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
-								Aufenthalt::getLocalDate, Collectors.counting())));
-		json.put(mapGroupedByDay);
+		if(fasseEinweisungsartenZusammen){
+			SortedMap<LocalDate, Long> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
+			mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
+										Aufenthalt::getLocalDate, Collectors.counting())));
+			
+			json.put(mapGroupedByDay);
+		} else{
+			SortedMap<String, Map<LocalDate, Long>> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
+			mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
+						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+										Aufenthalt::getLocalDate, Collectors.counting()))));
+			
+			json.put(mapGroupedByDay);
+		}
 		return json.toString();
 		
 		}
 
-	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum){
+	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen){
 		JSONArray json = new JSONArray();
 		temporalField = week.weekOfWeekBasedYear();
 
 		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
 				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
 		
-		SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
-		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
-								(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting())));
-		json.put(mapGroupedByWeek);
+		if(fasseEinweisungsartenZusammen){
+			SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+			mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+									(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting())));
+			
+			json.put(mapGroupedByWeek);
+
+		} else{
+			SortedMap<String, Map<String, Long>> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+			mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+									(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting()))));
+			
+			json.put(mapGroupedByWeek);
+		}
 		return json.toString();
 		
 		}
 	
-	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum){
+	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen){
 		JSONArray json = new JSONArray();
 		temporalField = week.weekOfWeekBasedYear();
 
 		Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
 				.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
 		
-		SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
-		mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
-								(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting())));
-		json.put(mapGroupedByWeek);
+		if(fasseEinweisungsartenZusammen){
+			SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+			mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+											(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting())));
+			json.put(mapGroupedByWeek);
+		} else{
+			SortedMap<String, Map<String, Long>> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+			mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+									(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+											(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting()))));
+			json.put(mapGroupedByWeek);
+		}
 		return json.toString();
 		
 	}
