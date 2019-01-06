@@ -48,10 +48,11 @@ public class Application {
 			 //Hello World
 		     get("/hello", (req, res) -> "Hello World");
 		     
-		     //Aufenthalt Objekte
+
+		     
+		     //es wird immer nur eine begrenzte anzahl ausgegeben
 		     get("/aufenthalte", (request, response) -> {
 				 response.type("application/json");
-				 
 				 String start = request.queryParams("start");
 				 String size = request.queryParams("size");
 				 
@@ -84,9 +85,30 @@ public class Application {
 				    return as.countDringlichkeit();
 		     });
 		     
+		     //Beispiel: http://localhost:4567/aufenthalte/zeitundtyp?start=2021-01-01 00:00:00&end=2022-12-30 00:00:00&typ=Einweisung
+		     get("/aufenthalte/zeitundtyp", (request, response) -> {
+		    	 IStringToDate Date = new StringToDate();
+				 response.type("application/json");
+				 String start = request.queryParams("start");
+				 String end = request.queryParams("end");
+				 String typ = request.queryParams("typ");
+				 return new Gson().toJson(
+						 as.getAufenthaltNachZeitUndTyp(Date.convertDate(start), Date.convertDate(end),typ)); 
+		     });
+		     
 		     get("/aufenthalte/alter", (request, response) -> {
 		    	 response.type("application/json");
 		    	 	return as.countAlter();
+		     });
+		     
+		     // Beispiel: http://localhost:4567/aufenthalte/zeit?start=2021-01-01 00:00:00&end=2022-12-30 00:00:00
+		     get("/aufenthalte/zeit", (request, response) -> {
+		    	 IStringToDate Date = new StringToDate();
+				 response.type("application/json");
+				 String start = request.queryParams("start");
+				 String end = request.queryParams("end");
+				 return new Gson().toJson(
+						 as.getAufenthaltNachZeit(Date.convertDate(start), Date.convertDate(end)));
 		     });
 		     
 		     get("/aufenthalte/zeit/tage", (request, response) -> {
@@ -95,6 +117,17 @@ public class Application {
 //		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
 		    	 	return as.countAufenthaltNachTage(vonDatumExamp, bisDatumExamp);
 		     });
+		     
+		     // Beispiel: http://localhost:4567/aufenthalte/typ?typ=Einweisung
+		     get("/aufenthalte/typ", (request, response) -> {
+		    	 IStringToDate Date = new StringToDate();
+				 response.type("application/json");
+				 String typ = request.queryParams("typ");
+				 return new Gson().toJson(
+						 as.getAufenthaltNachTyp(typ));
+		     });
+		     
+
 		     
 		     get("/aufenthalte/zeit/wochen", (request, response) -> {
 		    	 response.type("application/json");

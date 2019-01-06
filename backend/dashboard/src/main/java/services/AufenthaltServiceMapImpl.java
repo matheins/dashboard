@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import converter.IStringToDate;
 import converter.impl.StringToDate;
 import entity.Aufenthalt;
+import entity.Diagnose;
 
 public class AufenthaltServiceMapImpl implements IAufenthaltService{
 	IStringToDate strtoD = new StringToDate();
@@ -44,6 +45,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 	
 	private HashMap<String, Aufenthalt> aufenthaltMap;
 	private int countDringlichkeit = 0;
+	IDiagnoseService ds = new DiagnoseServiceMapImpl(); 
 	
 	private int counter(){
 		return counter++;
@@ -226,5 +228,92 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		}
 		return json.toString();
 	}
+
+	//aggregieren nach Tagen
+	@Override
+	public ArrayList<Aufenthalt> getAufenthaltNachZeit(Date start, Date end) {
+		ArrayList<Aufenthalt> list = new ArrayList<Aufenthalt>(aufenthaltMap.values());
+		ArrayList<Aufenthalt> resultListDates = new ArrayList<>();
+//		ArrayList<Aufenthalt> resultListCount = new ArrayList<>();
+		
+		for(Aufenthalt i : list){
+			if(i.getStartdate().after(start) && i.getStartdate().before(end)){ // Aufenthalte zwischen den start-&enddatum filtern
+				resultListDates.add(i);
+			}
+		} 
+		
+//		for (Aufenthalt j : resultListDates) {
+//			for (Aufenthalt k: resultListCount) {
+//			 if(j.getStartdate() != k.getStartdate() ) { //überprüfung ob datum in der Liste schon vrohanden ist
+//				 resultListCount.add(j); 				//datum wird hinzugefügt, falls noch nicht vorhanden ist
+//			 }  
+//			}
+//			
+//		}
+		
+//		ArrayList<Diagnose> diagnoseList = new ArrayList<Diagnose>(ds.getDiagnoseMap().values());
+//		for (Aufenthalt i: resultList) {
+//			for(Diagnose j: diagnoseList) {
+//				if (i.getAufenthaltID() == j.getDiagnoseID()) {	
+//				} resultList2.add(j);
+//			}
+//		}
+		return resultListDates;
+	}
+
+	
+	//aggregieren nach den 5 einlieferungsarten 
+	@Override
+	public ArrayList<Aufenthalt> getAufenthaltNachTyp(String einlieferungsart) { 
+		ArrayList<Aufenthalt> list = new ArrayList<Aufenthalt>(aufenthaltMap.values());
+		ArrayList<Aufenthalt> resultList = new ArrayList<>();
+		List<Diagnose> resultList2 = new ArrayList<>();
+		for(Aufenthalt i : list){
+			if(i.getEinweisungsart().equals(einlieferungsart)){
+				resultList.add(i);
+			}
+		} 
+		
+//		ArrayList<Diagnose> diagnoseList = new ArrayList<Diagnose>(ds.getDiagnoseMap().values());
+//		for (Aufenthalt i: resultList) {
+//			for(Diagnose j: diagnoseList) {
+//				if (i.getAufenthaltID() == j.getDiagnoseID()) {	
+//				} resultList2.add(j);
+//			}
+//		}
+//		
+//		return resultList2;
+		return resultList;
+	}
+
+	
+
+	@Override
+	public List<Aufenthalt> getAufenthaltNachZeitUndTyp(Date start, Date end, String einlieferungsart) {
+		ArrayList<Aufenthalt> list = new ArrayList<Aufenthalt>(aufenthaltMap.values());
+		ArrayList<Aufenthalt> resultList = new ArrayList<>();
+//		List<Diagnose> resultList2 = new ArrayList<>();
+		for(Aufenthalt i : list){
+			if(i.getEinweisungsart().equals(einlieferungsart) && i.getStartdate().after(start) && i.getStartdate().before(end)){
+				resultList.add(i);
+			}
+		} 
+		
+//		ArrayList<Diagnose> diagnoseList = new ArrayList<Diagnose>(ds.getDiagnoseMap().values());
+//		for (Aufenthalt i: resultList) {
+//			for(Diagnose j: diagnoseList) {
+//				if (i.getAufenthaltID() == j.getDiagnoseID()) {	
+//				} resultList2.add(j);
+//			}
+//		}
+//		
+//		return resultList2;
+		return resultList;
+	}
+
+
+	
+	
+	
 	
 }
