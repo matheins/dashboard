@@ -23,9 +23,9 @@ public interface IAufenthaltService {
 	public String countEinlieferungsarten();
 	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit);
 	//die nachfolgenden drei in Johannes' Version ohne boolean
-	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
-	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
-	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, boolean fasseEinweisungsartenZusammen);
+	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, String einweisungsart);
+	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, String einweisungsart);
+	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, String einweisungsart);
 	public List<Aufenthalt> getAufenthaltNachZeit(Date start, Date end);
 	public List<Aufenthalt> getAufenthaltNachZeitUndTyp(Date start, Date end, String typ);
 	public ArrayList<Aufenthalt> getAufenthaltNachTyp(String einlieferungsart);
