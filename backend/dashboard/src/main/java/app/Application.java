@@ -111,13 +111,13 @@ public class Application {
 						 as.getAufenthaltNachZeit(Date.convertDate(start), Date.convertDate(end)));
 		     });
 		     
-		     //Beispiel: http://localhost:4567/aufenthalte/zeit/tage?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&fasseEinweisungsartenZusammen=false
+		     //Beispiel: http://localhost:4567/aufenthalte/zeit/tage?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&einweisungsart=rettungsdienst
 		     get("/aufenthalte/zeit/tage", (request, response) -> {
 		    	 response.type("application/json");
 		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
 		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
-		    	 	return as.countAufenthaltNachTage(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
+		    	 String einweisungsart = request.queryParams("einweisungsart");
+		    	 	return as.countAufenthaltNachTage(vonDatum, bisDatum, einweisungsart);
 		     });
 		     
 		     // Beispiel: http://localhost:4567/aufenthalte/typ?typ=Einweisung
@@ -135,8 +135,8 @@ public class Application {
 		    	 response.type("application/json");
 		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
 		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
-		    	 	return as.countAufenthaltNachWochen(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
+		    	 String einweisungsart = request.queryParams("einweisungsart");
+		    	 	return as.countAufenthaltNachWochen(vonDatum, bisDatum, einweisungsart);
 		     });
 		     
 		     //Beispiel: http://localhost:4567/aufenthalte/zeit/monate?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&fasseEinweisungsartenZusammen=false
@@ -144,8 +144,8 @@ public class Application {
 		    	 response.type("application/json");
 		    	 Date vonDatum = strtoD.convertDate(request.queryParams("vonDatum"));
 		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
-		    	 boolean fasseEinweisungsartenZusammen = Boolean.parseBoolean(request.queryParams("fasseEinweisungsartenZusammen"));
-		    	 	return as.countAufenthaltNachMonaten(vonDatum, bisDatum, fasseEinweisungsartenZusammen);
+		    	 String einweisungsart = request.queryParams("einweisungsart");
+		    	 	return as.countAufenthaltNachMonaten(vonDatum, bisDatum, einweisungsart);
 		     });
 		     
 		     get("/aufenthalte/einlieferungsarten", (request, response) -> {
@@ -186,8 +186,8 @@ public class Application {
 			System.out.println(as.countEinlieferungsarten());
 //			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2021-02-07 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00")));
 			//System.out.println(as.gefiltertNachDringlichkeit(1).toString());
-			System.out.println(as.countAufenthaltNachTage(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2021-08-31 11:42:00"), false));
-			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2018-07-31 17:00:47"), strtoD.convertDate("2029-08-31 11:42:00"), false));
-			System.out.println(as.countAufenthaltNachMonaten(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00"), false));
+			System.out.println(as.countAufenthaltNachTage(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2021-08-31 11:42:00"), "Rettungsdienst"));
+			System.out.println(as.countAufenthaltNachWochen(strtoD.convertDate("2018-07-31 17:00:47"), strtoD.convertDate("2029-08-31 11:42:00"), "Rettungsdienst"));
+			System.out.println(as.countAufenthaltNachMonaten(strtoD.convertDate("2021-07-31 17:00:47"), strtoD.convertDate("2022-04-16 11:42:00"), "Rettungsdienst"));
 	}
 }
