@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IAufenthalt } from '../interfaces/aufenthalt';
+import { IAufenthalt, IAufenthaltCount, IAufenthaltCountArt } from '../interfaces/aufenthalt';
 import { IDringlichkeit } from '../interfaces/dringlichkeit';
 import { map, catchError, tap } from 'rxjs/operators';
 
@@ -27,6 +27,11 @@ export class AufenthaltService {
   getDringlichkeiten(): Observable<IDringlichkeit[]> {
         return this.http.get<IDringlichkeit[]>(this.ROOT_URL + '/aufenthalte/dringlichkeit');
 
+  }
+
+  getAufenthalteByDate(range, startYear, startMonth, startDay, endYear, endMonth, endDay, art): Observable<IAufenthaltCountArt[]> {
+    console.log(this.ROOT_URL + '/aufenthalte/zeit/' + range + '?vonDatum=' + startYear + '-' + startMonth +'-' + startDay + '%2000:00:00&bisDatum=' + endYear + '-' + endMonth + '-' + endDay + '%2000:00:00&&einweisungsart=' + art);
+    return this.http.get<IAufenthaltCountArt[]>(this.ROOT_URL + '/aufenthalte/zeit/' + range + '?vonDatum=' + startYear + '-' + startMonth +'-' + startDay + '%2000:00:00&bisDatum=' + endYear + '-' + endMonth + '-' + endDay + '%2000:00:00&einweisungsart=' + art)
   }
 
 

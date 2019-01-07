@@ -4,8 +4,8 @@ import { AppComponent } from './app.component';
 import { PatientenComponent } from './views/patienten/patienten.component';
 import { PieChartComponent } from './views/pie-chart/pie-chart.component';
 import { BarChartComponent } from './views/bar-chart/bar-chart.component';
-import { LineChartComponent } from './views/line-chart/line-chart.component';
 import { AufenthalteComponent } from './views/aufenthalte/aufenthalte.component';
+import { AnzahlEinlieferungenComponent } from './views/line-chart/anzahl-einlieferungen/anzahl-einlieferungen.component';
 
 const routes: Routes = [
   {
@@ -26,11 +26,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LineChartComponent,
+    component: AnzahlEinlieferungenComponent,
   },
   {
-    path: 'line-chart',
-    component: LineChartComponent,
+    path: 'anzahl-einlieferungen',
+    component: AnzahlEinlieferungenComponent,
   },
 ];
 

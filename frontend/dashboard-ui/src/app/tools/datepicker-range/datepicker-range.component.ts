@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { toDate } from '@angular/common/src/i18n/format_date';
 
 @Component({
   selector: 'app-datepicker-range',
@@ -21,14 +22,14 @@ export class DatepickerRangeComponent {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-      console.log(date);
+      console.log(this.fromDate);
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
-      console.log(date);
+      console.log(this.toDate);
     } else {
       this.toDate = null;
       this.fromDate = date;
-      console.log(date);
+      console.log(this.fromDate);
     }
   }
 

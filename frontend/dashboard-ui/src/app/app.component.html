@@ -1,52 +1,26 @@
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" [routerLink]="['/']" routerLinkActive="router-link-active" >Medic Dashboard <fa-icon [icon]="faNotesMedical"></fa-icon></a>
     </nav>
-    <!-- <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active" >
-                  <fa-icon [icon]="faHome"></fa-icon>
-                  Home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/patienten']" routerLinkActive="router-link-active">
-                  <span data-feather="file"></span>
-                  Patienten
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/aufenthalte']" routerLinkActive="router-link-active">
-                  <span data-feather="file"></span>
-                  Aufenthalte
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/pie-chart']" routerLinkActive="router-link-active">
-                  <span data-feather="file"></span>
-                  Demo Pie-Chart
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/bar-chart']" routerLinkActive="router-link-active">
-                  <span data-feather="file"></span>
-                  Demo Bar-Chart
-                </a>
-              </li>
-            </ul>
+    <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4 mt-5">
+      <div class="container">
+        <div class="justify-content-start flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
+          <div class="row">
+            <div class="dropdown col-4">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ansicht wählen
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" [routerLink]="['/bar-chart']" routerLinkActive="router-link-active">Dringlichkeiten</a>
+                <a class="dropdown-item" [routerLink]="['/anzahl-einlieferungen']" routerLinkActive="router-link-active">Anz. Einlieferungen</a>
+                <a class="dropdown-item" [routerLink]="['/aufenthalte']" routerLinkActive="router-link-active">Aufenthalte</a>
+                <a class="dropdown-item" [routerLink]="['/patienten']" routerLinkActive="router-link-active">Patienten</a>
+              </div>
+            </div>
           </div>
-        </nav>
+        </div>
       </div>
-    </div> -->
-
-
-
-
-              <router-outlet></router-outlet>
-
+    <router-outlet></router-outlet>
+  </main>
 
 
 
