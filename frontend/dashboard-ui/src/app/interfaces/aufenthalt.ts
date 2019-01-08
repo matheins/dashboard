@@ -7,3 +7,19 @@ export interface IAufenthalt {
   plz: String;
   alter: number;
 }
+
+export interface IAufenthaltCountArt{
+  datum: String;
+  anzahl: number;
+  einweisungsart: String;
+}
+
+export interface IAufenthaltCount{
+  datum: String;
+  anzahl: number;
+  einweisungsart: String;
+}
+
+export interface IEinlieferungen{
+  einlieferungen: IAufenthaltCount[];
+}
