@@ -118,7 +118,7 @@ public class Application {
 		    	 Date bisDatum = strtoD.convertDate(request.queryParams("bisDatum"));
 		    	 String einweisungsart = request.queryParams("einweisungsart");
 		    	 String zeiteinheit = request.queryParams("zeiteinheit");
-		    	 	return as.countAufenthaltNachZeiteinheit(vonDatum, bisDatum, einweisungsart, zeiteinheit);
+		    	 	return as.countAufenthaltNachZeiteinheit(vonDatum, bisDatum, zeiteinheit);
 		     });
 		     
 		     //Beispiel: http://localhost:4567/aufenthalte/zeit/tage?vonDatum=2021-01-01%2000:00:00&bisDatum=2022-12-30%2000:00:00&einweisungsart=rettungsdienst

@@ -159,7 +159,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 
-	public String countAufenthaltNachZeiteinheit(Date vonDatum, Date bisDatum, String einweisungsart, String zeiteinheit){
+	public String countAufenthaltNachZeiteinheit(Date vonDatum, Date bisDatum, String zeiteinheit){
 		if(zeiteinheit.equals("Tage")){
 			JSONArray json = new JSONArray();
 			temporalField = week.weekOfWeekBasedYear();
@@ -171,9 +171,9 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 					(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
 										Aufenthalt::getLocalDate, Collectors.counting()))));
 				
-			mapGroupedByDay.forEach((eArt, map) -> {
+			mapGroupedByDay.forEach((einweisungsart, map) -> {
 					JSONArray jsonE = new JSONArray();
-					jsonE.put(new JSONObject().put("einweisungsart", eArt));
+					jsonE.put(new JSONObject().put("einweisungsart", einweisungsart));
 					JSONArray jsonE2 = new JSONArray();
 					//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted.
 					TreeMap<LocalDate, Long> mapSorted = new TreeMap<LocalDate, Long>(); mapSorted.putAll(map);
@@ -197,9 +197,9 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
 										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting()))));
 			
-			mapGroupedByMonth.forEach((eArt, map) -> {
+			mapGroupedByMonth.forEach((einweisungsart, map) -> {
 					JSONArray jsonE = new JSONArray();
-					jsonE.put(new JSONObject().put("einweisungsart", eArt));
+					jsonE.put(new JSONObject().put("einweisungsart", einweisungsart));
 					JSONArray jsonE2 = new JSONArray();
 					//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted und sortiere sie mit einer Comparator-Klasse
 					TreeMap<String, Long> mapSorted = new TreeMap<String, Long>(new NumberAwareStringComparator()); mapSorted.putAll(map);
@@ -223,9 +223,9 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
 										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting()))));
 				
-				mapGroupedByWeek.forEach((eArt, map) -> {
+				mapGroupedByWeek.forEach((einweisungsart, map) -> {
 					JSONArray jsonE = new JSONArray();
-					jsonE.put(new JSONObject().put("einweisungsart", eArt));
+					jsonE.put(new JSONObject().put("einweisungsart", einweisungsart));
 					JSONArray jsonE2 = new JSONArray();
 					//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted und sortiere sie mit einer Comparator-Klasse
 					TreeMap<String, Long> mapSorted = new TreeMap<String, Long>(new NumberAwareStringComparator()); mapSorted.putAll(map);
