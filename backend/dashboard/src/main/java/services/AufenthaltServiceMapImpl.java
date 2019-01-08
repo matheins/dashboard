@@ -272,15 +272,24 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 //					.filter(aufenthalt -> aufenthalt.getEinweisungsart().equals(einweisungsart));
 			
 //			if(fasseEinweisungsartenZusammen){
-				SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+				SortedMap<String, Map<String, Long>> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
 				mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
-										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting())));
+						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting()))));
 				
 				mapGroupedByWeek.forEach((eArt, map) -> {
-/*					json.put(new JSONObject()
-							.put("datum", datum)
-							.put("anzahl", anzahl)
-							.put("einweisungsart", einweisungsart));*/
+					JSONArray jsonE = new JSONArray();
+					jsonE.put(new JSONObject().put("einweisungsart", eArt));
+					JSONArray jsonE2 = new JSONArray();
+					//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted und sortiere sie mit einer Comparator-Klasse
+					TreeMap<String, Long> mapSorted = new TreeMap<String, Long>(new NumberAwareStringComparator()); mapSorted.putAll(map); // comparator(NumberAwareStringComparator.getNumberAwareStringComparator()); 
+//					System.out.println("test123\n"+mapSorted.toString());
+					mapSorted.forEach((woche, anzahl) ->{
+						jsonE2.put(new JSONObject().put("woche", woche)
+												.put("anzahl", anzahl));
+					});
+					jsonE.put(jsonE2);
+					json.put(jsonE);
 				});
 
 	/*		} else{
