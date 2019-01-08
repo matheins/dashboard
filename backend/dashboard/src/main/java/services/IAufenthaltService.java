@@ -23,6 +23,7 @@ public interface IAufenthaltService {
 	public String countEinlieferungsarten();
 	public HashMap<String, Aufenthalt> gefiltertNachDringlichkeit(int dringlichkeit);
 	//die nachfolgenden drei in Johannes' Version ohne boolean
+	public String countAufenthaltNachZeiteinheit(Date vonDatum, Date bisDatum, String einweisungsart, String zeiteinheit);
 	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, String einweisungsart);
 	public String countAufenthaltNachMonaten(Date vonDatum, Date bisDatum, String einweisungsart);
 	public String countAufenthaltNachWochen(Date vonDatum, Date bisDatum, String einweisungsart);

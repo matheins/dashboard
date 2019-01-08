@@ -20,6 +20,8 @@ import java.util.stream.Stream;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import comparator.impl.NumberAwareStringComparator;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -157,7 +159,143 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 		return json.toString();
 	}
 
+	public String countAufenthaltNachZeiteinheit(Date vonDatum, Date bisDatum, String einweisungsart, String zeiteinheit){
+		if(zeiteinheit.equals("Tage")){
+			JSONArray json = new JSONArray();
+			temporalField = week.weekOfWeekBasedYear();
+	
+			Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+					.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+					//.sorted((a1, a2) -> a1.getStartdate()
+					//		  .compareTo(a2.getStartdate()));
+/*			if(!(einweisungsart=="NULL")){
+					stream.filter(aufenthalt -> aufenthalt.getEinweisungsart().equals(einweisungsart));
+			}*/
+	//		if(fasseEinweisungsartenZusammen){
+				SortedMap<String, Map<LocalDate, Long>> mapGroupedByDay = new ConcurrentSkipListMap<String, Map<LocalDate, Long>>();
+				mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
+						(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+										Aufenthalt::getLocalDate, Collectors.counting()))));
+				
+	//			json.put(mapGroupedByDay);
+	/*		} else{
+				SortedMap<String, Map<LocalDate, Long>> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
+				mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
+							(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+											Aufenthalt::getLocalDate, Collectors.counting()))));
+				
+				json.put(mapGroupedByDay);
+			}*/
+/*			mapGroupedByDay.forEach((eArt, map) -> {
+				JSONArray jsonEinweisungsart = new JSONArray().put(new JSONObject().put("einweisungsart", einweisungsart));
+//						.put(new JSONObject().put("einweisungsart", eArt));
+				JSONArray jsonEinweisungsart2 = new JSONArray();
+				map.forEach((datum, anzahl) -> {
+					jsonEinweisungsart2.put(new JSONObject().put("datum", datum)
+										.put("anzahl", anzahl));
+				});
+		/*		map.forEach((datum, anzahl) -> {
+					jsonEinweisungsart2.put(new JSONObject().put("datum", datum)
+										.put("anzahl", anzahl));
+				});*/
+//				jsonEinweisungsart.put(new JSONArray().put(new JSONObject().put("einweisungsart", eArt)));
+//				json.put(new JSONArray().put(new JSONObject().put("einweisungsart", eArt)).put(jsonEinweisungsart2));
+//				json.put(new JSONObject().put("einweisungsart", eArt)).put(jsonEinweisungsart2);
+/*				jsonEinweisungsart.put(jsonEinweisungsart2);
+				json.put(jsonEinweisungsart);*/
+/*				json.put(new JSONObject()
+						.put("datum", datum)
+						.put("anzahl", anzahl)
+						.put("einweisungsart", einweisungsart));*/
+//			});
+			mapGroupedByDay.forEach((eArt, map) -> {
+				JSONArray jsonE = new JSONArray();
+				jsonE.put(new JSONObject().put("einweisungsart", eArt));
+				JSONArray jsonE2 = new JSONArray();
+				//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted.
+				TreeMap<LocalDate, Long> mapSorted = new TreeMap<LocalDate, Long>(); mapSorted.putAll(map);
+				mapSorted.forEach((datum, anzahl) ->{
+					jsonE2.put(new JSONObject().put("datum", datum)
+											.put("anzahl", anzahl));
+				});
+				jsonE.put(jsonE2);
+				json.put(jsonE);
+			});
+			System.out.println("test\n"+mapGroupedByDay.toString());
+			return json.toString();
+//			return json.put(mapGroupedByDay).toString();
+		} else if(zeiteinheit.equals("Monate")){
+			JSONArray json = new JSONArray();
+			temporalField = week.weekOfWeekBasedYear();
 
+			Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+					.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+//					.filter(aufenthalt -> aufenthalt.getEinweisungsart().equals(einweisungsart));
+			
+//			if(fasseEinweisungsartenZusammen){
+				SortedMap<String, Map<String, Long>> mapGroupedByMonth = new TreeMap<>();//ConcurrentSkipListMap<>();
+				mapGroupedByMonth.putAll(stream.collect(Collectors.groupingBy(
+												(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+												(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting()))));
+				mapGroupedByMonth.forEach((eArt, map) -> {
+					JSONArray jsonE = new JSONArray();
+					jsonE.put(new JSONObject().put("einweisungsart", eArt));
+					JSONArray jsonE2 = new JSONArray();
+					//map ist keine sortierte Map. Daher uebertrage hier die Daten von map zu mapSorted und sortiere sie mit einer Comparator-Klasse
+					TreeMap<String, Long> mapSorted = new TreeMap<String, Long>(new NumberAwareStringComparator()); mapSorted.putAll(map); // comparator(NumberAwareStringComparator.getNumberAwareStringComparator()); 
+//					System.out.println("test123\n"+mapSorted.toString());
+					mapSorted.forEach((monat, anzahl) ->{
+						jsonE2.put(new JSONObject().put("monat", monat)
+												.put("anzahl", anzahl));
+					});
+					jsonE.put(jsonE2);
+					json.put(jsonE);
+/*					json.put(new JSONObject()
+							.put("datum", datum)
+							.put("anzahl", anzahl)
+							.put("einweisungsart", einweisungsart));*/
+				});
+	/*		} else{
+				SortedMap<String, Map<String, Long>> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+				mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+										(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+												(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().getYear())+"_"+String.valueOf(aufenthalt.getLocalDate().getMonthValue()), Collectors.counting()))));
+				json.put(mapGroupedByWeek);
+			}*/
+			return json.toString();
+		} else if(zeiteinheit.equals("Wochen")){
+			JSONArray json = new JSONArray();
+			temporalField = week.weekOfWeekBasedYear();
+
+			Stream <Aufenthalt> stream = aufenthaltMap.values().stream()
+					.filter(aufenthalt -> aufenthalt.getStartdate().after(vonDatum) && aufenthalt.getStartdate().before(bisDatum));
+//					.filter(aufenthalt -> aufenthalt.getEinweisungsart().equals(einweisungsart));
+			
+//			if(fasseEinweisungsartenZusammen){
+				SortedMap<String, Long> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+				mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting())));
+				
+				mapGroupedByWeek.forEach((eArt, map) -> {
+/*					json.put(new JSONObject()
+							.put("datum", datum)
+							.put("anzahl", anzahl)
+							.put("einweisungsart", einweisungsart));*/
+				});
+
+	/*		} else{
+				SortedMap<String, Map<String, Long>> mapGroupedByWeek = new TreeMap<>();//ConcurrentSkipListMap<>();
+				mapGroupedByWeek.putAll(stream.collect(Collectors.groupingBy(
+							(aufenthalt) -> aufenthalt.getEinweisungsart(), Collectors.groupingBy(
+										(aufenthalt) -> String.valueOf(aufenthalt.getLocalDate().get(week.weekBasedYear()))+"_"+String.valueOf(aufenthalt.getLocalDate().get(temporalField)), Collectors.counting()))));
+				
+				json.put(mapGroupedByWeek);
+			}*/
+			return json.toString();
+		} else {
+			return "Fehler! Die Zeiteinheit gibt es nicht!";
+		}
+	}
 	
 	public String countAufenthaltNachTage(Date vonDatum, Date bisDatum, String einweisungsart){
 		JSONArray json = new JSONArray();
@@ -171,7 +309,7 @@ public class AufenthaltServiceMapImpl implements IAufenthaltService{
 			mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
 										Aufenthalt::getLocalDate, Collectors.counting())));
 			
-			json.put(mapGroupedByDay);
+//			json.put(mapGroupedByDay);
 /*		} else{
 			SortedMap<String, Map<LocalDate, Long>> mapGroupedByDay = new ConcurrentSkipListMap<>(Comparator.naturalOrder());
 			mapGroupedByDay.putAll(stream.collect(Collectors.groupingBy(
