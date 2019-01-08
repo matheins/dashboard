@@ -214,7 +214,7 @@ export class AnzahlEinlieferungenComponent implements OnInit {
 
     //Notarzt
     loadAnzahlEinlieferungenNotarzt(){
-      this.aufenthaltService.getAufenthalteByDate(this.chart, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Notarzt")
+      this.aufenthaltService.getAufenthalteByDate(this.range, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Notarzt")
       .subscribe( data => {
         this.countNotarzt = data;
         console.log(data);
