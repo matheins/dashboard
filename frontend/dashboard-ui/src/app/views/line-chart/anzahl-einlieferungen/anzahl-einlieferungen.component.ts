@@ -23,6 +23,9 @@ export class AnzahlEinlieferungenComponent implements OnInit {
   aufenthalte: IAufenthalt[] = [];
   countRettungsdienst: IAufenthaltCount[] = [];
   countEinweisung: IAufenthaltCount[] = [];
+  countSelbst: IAufenthaltCount[] = [];
+  countZuweisungVerlegung: IAufenthaltCount[] = [];
+  countNotarzt: IAufenthaltCount[] = [];
   startYear: number;
   startMonth: number;
   startDay: number;
@@ -44,6 +47,9 @@ export class AnzahlEinlieferungenComponent implements OnInit {
     this.getDate();
     this.loadAnzahlEinlieferungenRettungsdienst();
     this.loadAnzahlEinlieferungenEinweisung();
+    this.loadAnzahlEinlieferungenNotarzt();
+    this.loadAnzahlEinlieferungenZuweisungVerlegung();
+    this.loadAnzahlEinlieferungenSelbst();
   }
 
 
@@ -74,6 +80,54 @@ export class AnzahlEinlieferungenComponent implements OnInit {
             label: ["Einweisung"],
             data: this.countEinweisung.map(x => x.anzahl),
             backgroundColor: "#7294cb",
+          },
+        ]
+      }
+    });
+  }
+
+  createChartSelbst(){
+    this.chart = new Chart('selbst', {
+      type: 'line',
+      data: {
+        labels: this.countSelbst.map(x => x.datum),
+        datasets: [
+          {
+            label: ["Selbst"],
+            data: this.countSelbst.map(x => x.anzahl),
+            backgroundColor: "#3f9852",
+          },
+        ]
+      }
+    });
+  }
+
+  createChartNotarzt(){
+    this.chart = new Chart('notarzt', {
+      type: 'line',
+      data: {
+        labels: this.countNotarzt.map(x => x.datum),
+        datasets: [
+          {
+            label: ["Notarzt"],
+            data: this.countNotarzt.map(x => x.anzahl),
+            backgroundColor: "#cc2528",
+          },
+        ]
+      }
+    });
+  }
+
+  createChartZuweisungVerlegung(){
+    this.chart = new Chart('zuweisung_verlegung', {
+      type: 'line',
+      data: {
+        labels: this.countZuweisungVerlegung.map(x => x.datum),
+        datasets: [
+          {
+            label: ["Zuweisung-Verlegung"],
+            data: this.countZuweisungVerlegung.map(x => x.anzahl),
+            backgroundColor: "#535055",
           },
         ]
       }
@@ -132,47 +186,44 @@ export class AnzahlEinlieferungenComponent implements OnInit {
       })
     }
 
-    // //Selbst
-    // loadAnzahlEinlieferungenSelbst(){
-    //   this.aufenthaltService.getAufenthalteByDate(this.range, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Selbst")
-    //   .subscribe( data => {
-    //     this.title = "Anzahl Aufenthalte";
-    //     this.count = data;
-    //     console.log(data);
-    //     //this.createChart();
+    //Selbst
+    loadAnzahlEinlieferungenSelbst(){
+      this.aufenthaltService.getAufenthalteByDate(this.range, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Selbst")
+      .subscribe( data => {
+        this.countSelbst = data;
+        console.log(data);
+        this.createChartSelbst();
 
-    //     console.log(this.aufenthalte);
-    //     //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
-    //   })
-    // }
+        console.log(this.aufenthalte);
+        //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
+      })
+    }
 
-    // //zuweisung_verlegung
-    // loadAnzahlEinlieferungenZuweisungVerlegung(){
-    //   this.aufenthaltService.getAufenthalteByDate(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "zuweisung_verlegung")
-    //   .subscribe( data => {
-    //     this.title = "Anzahl Aufenthalte";
-    //     this.count = data;
-    //     console.log(data);
-    //     //this.createChart();
+    //zuweisung_verlegung
+    loadAnzahlEinlieferungenZuweisungVerlegung(){
+      this.aufenthaltService.getAufenthalteByDate(this.range, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "zuweisung_verlegung")
+      .subscribe( data => {
+        this.countZuweisungVerlegung = data;
+        console.log(data);
+        this.createChartZuweisungVerlegung();
 
-    //     console.log(this.aufenthalte);
-    //     //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
-    //   })
-    // }
+        console.log(this.aufenthalte);
+        //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
+      })
+    }
 
-    // //Notarzt
-    // loadAnzahlEinlieferungenNotarzt(){
-    //   this.aufenthaltService.getAufenthalteByDate(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Notarzt")
-    //   .subscribe( data => {
-    //     this.title = "Anzahl Aufenthalte";
-    //     this.count = data;
-    //     console.log(data);
-    //     //this.createChart();
+    //Notarzt
+    loadAnzahlEinlieferungenNotarzt(){
+      this.aufenthaltService.getAufenthalteByDate(this.chart, this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay, "Notarzt")
+      .subscribe( data => {
+        this.countNotarzt = data;
+        console.log(data);
+        this.createChartNotarzt();
 
-    //     console.log(this.aufenthalte);
-    //     //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
-    //   })
-    // }
+        console.log(this.aufenthalte);
+        //console.log(this.startYear, this.startMonth, this.startDay, this.endYear, this.endMonth, this.endDay);
+      })
+    }
 
 
       // events on slice click
